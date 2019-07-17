@@ -1,4 +1,6 @@
 PODS:
+  - Firebase (6.4.0):
+    - Firebase/Core (= 6.4.0)
   - Firebase/Analytics (6.4.0):
     - Firebase/Core
   - Firebase/Core (6.4.0):
@@ -66,6 +68,7 @@ PODS:
   - nanopb/encode (0.3.901)
   - Protobuf (3.9.0)
   - SMRemote (0.1.0):
+    - Firebase
     - Firebase/Analytics
     - Firebase/Core
     - Firebase/RemoteConfig
@@ -101,7 +104,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
-  SMRemote: 6b87d72a3937630d74cfa6aecd561ab7e1056590
+  SMRemote: 5546713bc9d2ea91d9cdc70fbf42fdf215de2d37
 
 PODFILE CHECKSUM: 1407c3602bd20d8886782062eebf2cfb50e2e414
 

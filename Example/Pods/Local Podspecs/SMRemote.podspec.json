@@ -20,7 +20,11 @@
     "ios": "9.0"
   },
   "source_files": "SMRemote/Classes/**/*",
+  "static_framework": true,
   "dependencies": {
+    "Firebase": [
+
+    ],
     "Firebase/Core": [
 
     ],
@@ -31,6 +35,5 @@
 
     ]
   },
-  "static_framework": true,
   "swift_version": "4.2"
 }

@@ -110,7 +110,9 @@
 		267AC5C3D53ADA0513DBFB0EF1262243 /* GULUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A2D5803DA427BDC7CB10A5BF5412F /* GULUserDefaults.m */; };
 		26A342038B70F09B9FB4C2432B72C8AE /* FIRInstanceIDCheckinService.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C23D04AFB61D27E630F843DC914E01B /* FIRInstanceIDCheckinService.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		290BE7E0B3A09F8444A132D40A185870 /* GULNetworkConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A66DCF9823767F2AA5376DCF29DCD0 /* GULNetworkConstants.m */; };
-		29DB80DB22DEF76E00247E9A /* SMRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB80DA22DEF76E00247E9A /* SMRemote.swift */; };
+		29DB80E122DEF89900247E9A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 29DB80DD22DEF89900247E9A /* .gitkeep */; };
+		29DB80E322DEF89900247E9A /* SMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB80DF22DEF89900247E9A /* SMConfig.swift */; };
+		29DB80E422DEF89900247E9A /* SMRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DB80E022DEF89900247E9A /* SMRemote.swift */; };
 		2A3AAA5CF16A9BE7234D68E618C9DE81 /* Type.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398CF50CC7EEE1AC0B451AB31F655E4 /* Type.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2AFEA8E1EF7E393BCF4D6800CEC1303B /* FIRInstanceIDUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7949AC6395782FC96A1FAF99A231D57B /* FIRInstanceIDUtilities.m */; };
 		2B79837146B42FC86FCC1FC67AB4A696 /* pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 645B1C34050DF75E3553AAA96239B65B /* pb.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -138,7 +140,6 @@
 		4647446A40DF0A9A2BB790B4DBDC65DE /* FieldMask.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 636ABE0DA2F1799727B2D9F0BF0F5EC1 /* FieldMask.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		46AD973B02CD1D6D37832E100524CBA3 /* GPBMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB23317BFB32A5DDFF6572DA3BBB1A /* GPBMessage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		478D63C946A1DE1C2C925685FB06DAB2 /* FIRErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C165F71D80205BD00196A780D3FFFC3 /* FIRErrors.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		489BED61373BC581EBBF4211EB085520 /* SMConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3C0BC5A4A43EC53E59017CDF9AF9A7 /* SMConfig.swift */; };
 		49708C28027524F84DA3801C4FBE160D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3477DD5B6202AED934620CCA7D1D6879 /* SystemConfiguration.framework */; };
 		4ADAB93775828D5F2FE16E702F9CB364 /* GPBRootObject_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9841C7B814BB8A1C122AAE9D9B1B4DCC /* GPBRootObject_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BAC7229CC005861C8CEF5BDA6A44324 /* FIRInstanceIDStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F87070E0E0E110AEB2F52670AA83D /* FIRInstanceIDStringEncoding.m */; };
@@ -172,7 +173,6 @@
 		6DF9EB1D185F80ED931669CBA10C6F6E /* GPBExtensionRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFD3D3C5AEED1A1C322874BD22DB4E7 /* GPBExtensionRegistry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6FAA0094DBFC42C0A252C6F7541B2276 /* Protobuf-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 64F19EFA907C558EC8A1EDCC74724917 /* Protobuf-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		712AD509960A9C2A8CD78C2C5076CA40 /* FIRInstanceIDCheckinStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C0B7D5D63664853363B94066D0CA758 /* FIRInstanceIDCheckinStore.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		721A255381BFF8B2CEF737F605549DF5 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CC921A3C587A76DB9CF35478E91E68 /* ReplaceMe.swift */; };
 		72F944C415E1D21F447F0DED16475AE9 /* FIRInstanceIDAPNSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A7CEB2A0C731149E486A3D972F2F2 /* FIRInstanceIDAPNSInfo.m */; };
 		753E777ABDBD03E95065FB87574F0F55 /* GULAppDelegateSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CBC542E5D46B59A3E19AD4B419AAC5 /* GULAppDelegateSwizzler.m */; };
 		770D51F8C2F819CB357F3DF8E2F2FA37 /* FIRInstanceIDStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 75D4C38408CEA84FEFC0B398C17B7B10 /* FIRInstanceIDStore.m */; };
@@ -592,7 +592,9 @@
 		295547D281EAD7C1F9C662600F18BE2C /* Api.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Api.pbobjc.h; path = objectivec/google/protobuf/Api.pbobjc.h; sourceTree = "<group>"; };
 		29A9A0F859D50D48C7EC3BDE1BE7D0A5 /* Pods-SMRemote_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SMRemote_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		29CA917F72DA5E1142E4B03A885167E9 /* FIRConfigurationInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRConfigurationInternal.h; path = Firebase/Core/Private/FIRConfigurationInternal.h; sourceTree = "<group>"; };
-		29DB80DA22DEF76E00247E9A /* SMRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SMRemote.swift; path = SMRemote/Classes/SMRemote.swift; sourceTree = "<group>"; };
+		29DB80DD22DEF89900247E9A /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		29DB80DF22DEF89900247E9A /* SMConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMConfig.swift; sourceTree = "<group>"; };
+		29DB80E022DEF89900247E9A /* SMRemote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMRemote.swift; sourceTree = "<group>"; };
 		2B3D6B26C04045FD9A75746927635D36 /* FIRErrorCode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRErrorCode.h; path = Firebase/Core/Private/FIRErrorCode.h; sourceTree = "<group>"; };
 		2BD7921D5306476E2028BC67742D9A96 /* FIRInstanceIDTokenStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRInstanceIDTokenStore.m; path = Firebase/InstanceID/FIRInstanceIDTokenStore.m; sourceTree = "<group>"; };
 		2D9ACB2FD3FA7B2EFB5574EFA698CBBB /* FIRInstanceIDAPNSInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceIDAPNSInfo.h; path = Firebase/InstanceID/FIRInstanceIDAPNSInfo.h; sourceTree = "<group>"; };
@@ -693,7 +695,6 @@
 		858C03B1841C5C8E2B5F7126C152DE14 /* GULNetworkConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULNetworkConstants.h; path = GoogleUtilities/Network/Private/GULNetworkConstants.h; sourceTree = "<group>"; };
 		85C1F96C41DE9B2D3F9163C6E46EC55E /* FIRInstanceIDLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceIDLogger.h; path = Firebase/InstanceID/FIRInstanceIDLogger.h; sourceTree = "<group>"; };
 		865CAFC157CB6E99908860A408FFD7F6 /* Pods-SMRemote_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SMRemote_Example-frameworks.sh"; sourceTree = "<group>"; };
-		86CC921A3C587A76DB9CF35478E91E68 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = SMRemote/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
 		879B700BCC0C1B459807011423405351 /* FIRConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRConfiguration.m; path = Firebase/Core/FIRConfiguration.m; sourceTree = "<group>"; };
 		87CCD7707C62A460CE8D2A05DDEE8309 /* Any.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Any.pbobjc.h; path = objectivec/google/protobuf/Any.pbobjc.h; sourceTree = "<group>"; };
 		8949ABA025BBCCCFC1C995B76705C6C3 /* GPBProtocolBuffers_RuntimeSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBProtocolBuffers_RuntimeSupport.h; path = objectivec/GPBProtocolBuffers_RuntimeSupport.h; sourceTree = "<group>"; };
@@ -741,7 +742,6 @@
 		AB8AF672E2C3C825A49088D0FA828CDC /* SMRemote-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SMRemote-Info.plist"; sourceTree = "<group>"; };
 		ABFC782917456E2E39C7819F6363FCD4 /* Wrappers.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Wrappers.pbobjc.m; path = objectivec/google/protobuf/Wrappers.pbobjc.m; sourceTree = "<group>"; };
 		AC26A133F891EE6AE44C3E4C9E5D0ACC /* GULReachabilityChecker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULReachabilityChecker.h; path = GoogleUtilities/Reachability/Private/GULReachabilityChecker.h; sourceTree = "<group>"; };
-		AC3C0BC5A4A43EC53E59017CDF9AF9A7 /* SMConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SMConfig.swift; path = SMRemote/Classes/SMConfig.swift; sourceTree = "<group>"; };
 		AD8980877DDBF85D3B12AA2B788C3AA6 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		AF73FFC0F75831FFA30217EB4D552FA3 /* FIRInstanceIDKeyPairUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceIDKeyPairUtilities.h; path = Firebase/InstanceID/FIRInstanceIDKeyPairUtilities.h; sourceTree = "<group>"; };
 		B037DFAF6E635B69CC3D0110C353E9D1 /* FIRInstanceIDKeyPairUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRInstanceIDKeyPairUtilities.m; path = Firebase/InstanceID/FIRInstanceIDKeyPairUtilities.m; sourceTree = "<group>"; };
@@ -950,6 +950,17 @@
 				3C9A2D5803DA427BDC7CB10A5BF5412F /* GULUserDefaults.m */,
 			);
 			name = UserDefaults;
+			sourceTree = "<group>";
+		};
+		29DB80DC22DEF89900247E9A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				29DB80DD22DEF89900247E9A /* .gitkeep */,
+				29DB80DF22DEF89900247E9A /* SMConfig.swift */,
+				29DB80E022DEF89900247E9A /* SMRemote.swift */,
+			);
+			name = Classes;
+			path = SMRemote/Classes;
 			sourceTree = "<group>";
 		};
 		2F4D89986EDEE1976AAEB7750924F177 /* Network */ = {
@@ -1519,11 +1530,9 @@
 		DC771A37EAFBD412547F1880C53DD67B /* SMRemote */ = {
 			isa = PBXGroup;
 			children = (
-				86CC921A3C587A76DB9CF35478E91E68 /* ReplaceMe.swift */,
-				AC3C0BC5A4A43EC53E59017CDF9AF9A7 /* SMConfig.swift */,
+				29DB80DC22DEF89900247E9A /* Classes */,
 				563BB1BDD4B69BA5D7183AA0FC9767DD /* Pod */,
 				BEE94B847874AB18806F986D7738460E /* Support Files */,
-				29DB80DA22DEF76E00247E9A /* SMRemote.swift */,
 			);
 			name = SMRemote;
 			path = ../..;
@@ -1983,6 +1992,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29DB80E122DEF89900247E9A /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2020,15 +2030,16 @@
 				9874815C85B30159007DA0D2DBFF2D8A /* FIRBundleUtil.m in Sources */,
 				44030BBB23263ECBB5DE64A44E54510C /* FIRComponent.m in Sources */,
 				6D3452A07F637D517CEA11CFF0F2B744 /* FIRComponentContainer.m in Sources */,
-				29DB80DB22DEF76E00247E9A /* SMRemote.swift in Sources */,
 				39821C8C84233BC710EEDF75050A5145 /* FIRComponentType.m in Sources */,
 				B09B5BCE1178470C3BBF275B8D5FD7B4 /* FIRConfiguration.m in Sources */,
 				589647CA18A756CFBE91BC2E895300DA /* FIRDependency.m in Sources */,
 				C9F163BED261D6F49EC9B085B283C2D6 /* FirebaseCore-dummy.m in Sources */,
 				C94A2B165B7FC49EADFE741E88127F2E /* FIRErrors.m in Sources */,
 				EEFCEA71111F32D4E5027FE66437F1F2 /* FIRLogger.m in Sources */,
+				29DB80E422DEF89900247E9A /* SMRemote.swift in Sources */,
 				CAE6B5CCB6844DF115B15588E15C89E6 /* FIROptions.m in Sources */,
 				92170FD9C3CC285F9F93092FC6F00EEA /* FIRVersion.m in Sources */,
+				29DB80E322DEF89900247E9A /* SMConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2036,8 +2047,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				721A255381BFF8B2CEF737F605549DF5 /* ReplaceMe.swift in Sources */,
-				489BED61373BC581EBBF4211EB085520 /* SMConfig.swift in Sources */,
 				855EF3CE5ED3AF55CEFBBB562822FA20 /* SMRemote-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
