@@ -7,6 +7,7 @@
 
 import Foundation
 import GoogleMobileAds
+import PKHUD
 
 //MARK:- Config
 let adsPrefixCounter:String = "_ads_counter"
@@ -43,7 +44,7 @@ open class SMAdsManager : NSObject {
             if loopCounter - 1 == loopConfig  {
                 self.resetCounter(key: loop + adsPrefixCounter)
                 //Show ads
-                self.loadGADInterstitial(completionHandler: { success in
+                self.loadGADInterstitial(controller: controller, completionHandler: { success in
                     if success {
                         self.interstitial.present(fromRootViewController: controller)
                     } else {
@@ -56,7 +57,7 @@ open class SMAdsManager : NSObject {
         } else {
             if startCounter == startConfig {
                 //Show ads
-                self.loadGADInterstitial(completionHandler: { success in
+                self.loadGADInterstitial(controller: controller, completionHandler: { success in
                     if success {
                         self.interstitial.present(fromRootViewController: controller)
                     } else {
@@ -80,7 +81,10 @@ open class SMAdsManager : NSObject {
         UserDefaults.standard.synchronize()
     }
     
-    func loadGADInterstitial(completionHandler:((Bool) -> Void)?) {
+    func loadGADInterstitial(controller: UIViewController, completionHandler:((Bool) -> Void)?) {
+        DispatchQueue.main.async {
+            HUD.show(.labeledProgress(title: nil, subtitle: "Load ads..."), onView: controller.view)
+        }
         interstitialLoadCompled = completionHandler
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
         let request = GADRequest()
@@ -96,12 +100,14 @@ extension SMAdsManager : GADInterstitialDelegate {
     public func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("SMAdsManager:interstitialDidReceiveAd")
         interstitialLoadCompled?(true)
+        HUD.hide()
     }
     
     /// Tells the delegate an ad request failed.
     public func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print("SMAdsManager:interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
         interstitialLoadCompled?(false)
+        HUD.hide()
     }
     
     /// Tells the delegate that an interstitial will be presented.
@@ -118,6 +124,7 @@ extension SMAdsManager : GADInterstitialDelegate {
     public func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("SMAdsManager:interstitialDidDismissScreen")
         interstitialLoadCompled?(false)
+        HUD.hide()
     }
     
     /// Tells the delegate that a user click will open another app
