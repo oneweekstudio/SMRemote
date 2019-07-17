@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SMRemote_Example' do
+  pod 'SMRemote', :path => '../'
+
+  target 'SMRemote_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
