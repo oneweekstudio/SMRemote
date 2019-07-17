@@ -22,7 +22,7 @@ pod 'SMRemote'
 
 ## Author
 
-oneweekstudio, 48544624+oneweekstudio@users.noreply.github.com
+oneweekstudio, Hintoro , 48544624+oneweekstudio@users.noreply.github.com
 
 ## License
 
