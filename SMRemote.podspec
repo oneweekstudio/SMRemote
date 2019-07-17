@@ -40,10 +40,16 @@ Pod::Spec.new do |s|
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+   s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-   s.dependency  'Firebase/Core'
-   s.dependency 'Firebase/RemoteConfig'
-   s.dependency 'Firebase/Analytics'
-   s.static_framework = true
+  s.static_framework = true
+
+  s.ios.dependency 'Firebase/Core'
+  s.ios.dependency 'Firebase/RemoteConfig'
+  s.ios.dependency 'Firebase/Analytics'
+  
+  
+#  s.frameworks = [
+#    'Firebase'
+#  ]
 end

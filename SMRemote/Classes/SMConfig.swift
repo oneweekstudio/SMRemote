@@ -6,11 +6,10 @@
 //
 
 import Foundation
-class SMConfig : NSObject {
+open class SMConfig : NSObject {
     
-    var ad_dialog_start = 1
-    var ad_dialog_loop = 1
-    var more_tool = 1
+    open var ad_dialog_start = 1
+    open var ad_dialog_loop = 1
+    open var more_tool = 1
 
-    
 }
