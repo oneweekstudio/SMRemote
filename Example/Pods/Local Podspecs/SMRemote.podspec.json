@@ -20,20 +20,20 @@
     "ios": "9.0"
   },
   "source_files": "SMRemote/Classes/**/*",
+  "frameworks": "UIKit",
   "static_framework": true,
-  "dependencies": {
-    "Firebase": [
+  "ios": {
+    "dependencies": {
+      "Firebase/Core": [
 
-    ],
-    "Firebase/Core": [
+      ],
+      "Firebase/RemoteConfig": [
 
-    ],
-    "Firebase/RemoteConfig": [
+      ],
+      "Firebase/Analytics": [
 
-    ],
-    "Firebase/Analytics": [
-
-    ]
+      ]
+    }
   },
   "swift_version": "4.2"
 }
