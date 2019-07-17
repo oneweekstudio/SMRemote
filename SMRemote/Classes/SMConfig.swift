@@ -8,8 +8,12 @@
 import Foundation
 open class SMConfig : NSObject {
     
-    open var ad_dialog_start = 1
-    open var ad_dialog_loop = 1
-    open var more_tool = 1
-
+    @objc open var ad_dialog_start = 1
+    @objc open var ad_dialog_loop = 1
+    @objc open var more_tool = 1
+    
+    @objc open var default_start = 1
+    @objc open var default_loop = 2
+    
 }
+

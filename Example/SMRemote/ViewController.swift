@@ -27,6 +27,14 @@ class ViewController: UIViewController {
             print("Success")
         }
     }
+    
+    @IBAction func showAdsFull(_ sender: Any) {
+        SMAdsManager.shared.showFull(controller: self, start: #keyPath(Dev.default_start), loop: #keyPath(Dev.default_loop)) { (success) in
+            print("Hiện quảng cáo full thành công")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "B")
+            self.navigationController?.pushViewController(vc!, animated: true)
+        }
+    }
 
 }
 

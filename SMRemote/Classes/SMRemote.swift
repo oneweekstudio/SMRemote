@@ -47,6 +47,8 @@ open class SMRemote : NSObject {
                 guard let key = i.label else { return }
                 guard let value = remoteConfig[key].numberValue as? Int else { return }
                 print("Super: nhận về key \(key) value \(value)")
+                self.set(key: key + adsPrefix, value: value)
+                self.set(key: key + adsPrefixCounter, value: 1)
             }
         }
         
@@ -54,7 +56,15 @@ open class SMRemote : NSObject {
             guard let key = i.label else { return }
             guard let value = remoteConfig[key].numberValue as? Int else { return }
             print("Child: nhận về key \(key) value \(value)")
+            self.set(key: key + adsPrefix, value: value)
+            self.set(key: key + adsPrefixCounter, value: 1)
         }
+        
     }
     
+    fileprivate func set(key:String, value: Any) {
+        UserDefaults.standard.setValue(value, forKey: key)
+        UserDefaults.standard.synchronize()
+    }
+
 }

@@ -32,6 +32,15 @@
       ],
       "Firebase/Analytics": [
 
+      ],
+      "MagicMapper": [
+
+      ],
+      "Google-Mobile-Ads-SDK": [
+
+      ],
+      "FBAudienceNetwork": [
+
       ]
     }
   },
