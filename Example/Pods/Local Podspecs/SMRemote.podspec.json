@@ -1,0 +1,36 @@
+{
+  "name": "SMRemote",
+  "version": "0.1.0",
+  "summary": "Sản phẩm thuộc về ONEWEEK STUDIO",
+  "swift_versions": "4.2",
+  "description": "TODO: Add long description of the pod here. Add long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here",
+  "homepage": "https://github.com/oneweekstudio/SMRemote",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "oneweekstudio": "48544624+oneweekstudio@users.noreply.github.com"
+  },
+  "source": {
+    "git": "https://github.com/oneweekstudio/SMRemote.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "SMRemote/Classes/**/*",
+  "dependencies": {
+    "Firebase/Core": [
+
+    ],
+    "Firebase/RemoteConfig": [
+
+    ],
+    "Firebase/Analytics": [
+
+    ]
+  },
+  "static_framework": true,
+  "swift_version": "4.2"
+}

@@ -1,0 +1,6 @@
+framework module Pods_SMRemote_Example {
+  umbrella header "Pods-SMRemote_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
