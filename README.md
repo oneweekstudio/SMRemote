@@ -166,7 +166,7 @@ func loadConfig() {
 1. Kéo 1 cái view vào controller
 2. Đổi class UIView của cái view vừa kéo thành SMAdsBannerView
 <p align="center"><img src="screenshot/step2.png" width = "auto", height = "auto" ></p>
-3. Kéo IBOutlet vào ViewController
+3. Kéo @IBOutlet vào ViewController
 <p align="center"><img src="screenshot/step3.png" width = "auto", height = "auto" ></p>
 
 > Gọi quảng cáo:
@@ -176,3 +176,7 @@ func loadConfig() {
     SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
 }
 ````
+Kết quả
+====
+<p align="center"><img src="screenshot/step4.png" width = "auto", height = "auto" ></p>
+<p align="center"><img src="screenshot/step5.png" width = "auto", height = "auto" ></p>
