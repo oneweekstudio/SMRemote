@@ -2,7 +2,7 @@
 
 Hướng dẫn sử dụng:
 =====
-Cấu hình
++Cấu hình trong firebase remote config
 > Config key mặc định trong thằng FIREBASE:
 ````
   quangcao
@@ -10,8 +10,8 @@ Cấu hình
   ad_dialog_loop
   ad_dialog_start
 ````
-- Trong thằng quảng cáo mình cần chọn cấu hình JSON cho nó: Ví dụ cho Admob và Facebook test
-Admob
++Trong thằng quảng cáo mình cần chọn cấu hình JSON cho nó: Ví dụ cho Admob và Facebook test
+>Admob
 ````
 {
   "full": {
@@ -44,7 +44,7 @@ Admob
   }
 }
 ````
-Facebook
+> Facebook
 ````
 {
   "full": {
