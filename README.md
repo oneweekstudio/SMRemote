@@ -2,21 +2,20 @@
 
 Hướng dẫn sử dụng:
 =====
-#FIREBASE
-1. CONFIG FIREBASE
-  - Cấu hình trong firebase remote config
-  > Config key mặc định trong thằng FIREBASE:
-  ````
-    quangcao
-    more_tool
-    ad_dialog_loop
-    ad_dialog_start
-  ````
-  - Trong thằng quảng cáo mình cần chọn cấu hình JSON cho nó: Ví dụ cho Admob và Facebook test
-  >Admob
-  ````
-    {
-    "full": {
+
+- Cấu hình trong firebase remote config
+> Config key mặc định trong thằng FIREBASE:
+````
+  quangcao
+  more_tool
+  ad_dialog_loop
+  ad_dialog_start
+````
+- Trong thằng quảng cáo mình cần chọn cấu hình JSON cho nó: Ví dụ cho Admob và Facebook test
+>Admob
+````
+{
+  "full": {
     "app_id": "ca-app-pub-3940256099942544~1458002511",
     "ads_id": "ca-app-pub-3940256099942544/4411468910",
     "format": "full",
@@ -79,5 +78,5 @@ Hướng dẫn sử dụng:
   }
 }
 ````
-> Demo firebase config
+> Demo firebase config. Chúng ta có thể tạo một số thuộc tính khác cần thiết: ví dụ : banner_home
 <p align="center"><img src="screenshot/step1.png" width = "auto", height = "auto" ></p>
