@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     
     func loadConfig() {
         SMRemote.sharedInstance.load(smConfig: Dev()) {
-//            print("Success")
+            print("Tải thành công config từ remote")
         }
     }
     
