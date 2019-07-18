@@ -149,7 +149,10 @@ func loadConfig() {
 ````
 @IBAction func showAdsFull(_ sender: Any) {
     //Gọi full với start loop
-    SMAdsManager.shared.showFull(controller: self, start: #keyPath(Dev.default_start), loop: #keyPath(Dev.default_loop)) { (success) in
+    SMAdsManager.shared.showFull(controller: self,
+                                start: #keyPath(Dev.default_start),
+                                loop: #keyPath(Dev.default_loop))
+                               { (success) in
         print("Action tiếp theo sau khi hiện ads full. Ở đây ví dụ sang màn hình tiếp theo 'B'")
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "B")
         self.navigationController?.pushViewController(vc!, animated: true)
@@ -172,7 +175,10 @@ func loadConfig() {
 ````
 @IBAction func showBannerAds(_ sender: Any) {
     //Hàm gọi quảng cáo
-    SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
+    SMAdsManager.shared.showBannerAds(present: self,
+                                      bannerView: self.bannerView,
+                                      bannerHeight: self.bannerHeight,
+                                      keyConfig: #keyPath(Dev.banner_home))
 }
 ````
 Kết quả
