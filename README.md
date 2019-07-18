@@ -177,5 +177,5 @@ func loadConfig() {
 ````
 Kết quả
 ====
-<p align="center"><img src="screenshot/step4.png" width = "30%", height = "auto" ></p>
-<p align="center"><img src="screenshot/step5.png" width = "30%", height = "auto" ></p>
+<p "><img src="screenshot/step4.png" width = "50%", height = "auto" ></p>
+<p "><img src="screenshot/step5.png" width = "50%", height = "auto" ></p>
