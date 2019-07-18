@@ -10,6 +10,9 @@ import UIKit
 import SMRemote
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var bannerHeight: NSLayoutConstraint!
+    @IBOutlet weak var bannerView: SMAdsBannerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +27,7 @@ class ViewController: UIViewController {
     
     func loadConfig() {
         SMRemote.sharedInstance.load(smConfig: Dev()) {
-            print("Success")
+//            print("Success")
         }
     }
     
@@ -35,10 +38,15 @@ class ViewController: UIViewController {
             self.navigationController?.pushViewController(vc!, animated: true)
         }
     }
+    
+    @IBAction func showBannerAds(_ sender: Any) {
+        SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
+    }
 
 }
 
 open class Dev : SMConfig {
     
-    var custom_property = 1
+    @objc var custom_property = 1
+    @objc var banner_home = 1
 }

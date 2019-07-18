@@ -28,18 +28,44 @@
                                     <action selector="showAdsFull:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="9Sf-zf-WQz"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfw-LL-erH" customClass="SMAdsBannerView" customModule="SMRemote">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="mYl-ev-Nns"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbm-UC-fGd">
+                                <rect key="frame" x="142.5" y="398.5" width="90" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="2Eu-oS-kwh"/>
+                                    <constraint firstAttribute="height" constant="40" id="fqW-Ha-nXE"/>
+                                </constraints>
+                                <state key="normal" title="Banner"/>
+                                <connections>
+                                    <action selector="showBannerAds:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XvI-FR-LAV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Rbm-UC-fGd" firstAttribute="top" secondItem="MRr-yZ-sF1" secondAttribute="bottom" constant="50" id="1Jl-fz-YIT"/>
+                            <constraint firstItem="Rfw-LL-erH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Dhb-gy-dcb"/>
+                            <constraint firstItem="Rbm-UC-fGd" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Z26-8P-ftk"/>
+                            <constraint firstAttribute="trailing" secondItem="Rfw-LL-erH" secondAttribute="trailing" id="cVy-On-L5v"/>
                             <constraint firstItem="MRr-yZ-sF1" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="eVr-xu-hZq"/>
                             <constraint firstItem="MRr-yZ-sF1" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="o4f-49-0t2"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Rfw-LL-erH" secondAttribute="bottom" id="xLy-kh-30h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="azU-wB-gT0"/>
+                    <connections>
+                        <outlet property="bannerHeight" destination="mYl-ev-Nns" id="Tow-ua-NnV"/>
+                        <outlet property="bannerView" destination="Rfw-LL-erH" id="3c6-Z5-vNm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992.79999999999995" y="26.53673163418291"/>
+            <point key="canvasLocation" x="1013.6" y="26.53673163418291"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="dJm-cp-Hau">
@@ -87,7 +113,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNi-iT-tR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="27"/>
+            <point key="canvasLocation" x="290" y="27"/>
         </scene>
     </scenes>
 </document>

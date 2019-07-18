@@ -257,3 +257,33 @@ extension SMAdsManager : FBInterstitialAdDelegate {
         HUD.hide()
     }
 }
+
+
+//MARK:- Banner
+extension SMAdsManager {
+    
+    open func showBannerAds( present controller: UIViewController, bannerView: SMAdsBannerView, bannerHeight height : NSLayoutConstraint, keyConfig: String) {
+        let bannerUnit = SMAdsManager.shared.quangcao.banner
+        
+        bannerView.rootViewController = controller
+        
+        bannerView.bannerUnit = bannerUnit
+        
+        if enableBannerAds(keyConfig: keyConfig) {
+            height.constant = SMAdsBannerView.bannerHeight
+        } else {
+            height.constant = 0
+        }
+        
+        bannerView.updateConstraints()
+        controller.view.layoutSubviews()
+    }
+    
+    private func enableBannerAds( keyConfig : String) -> Bool {
+        let userDefault = UserDefaults.standard
+        let status = userDefault.integer(forKey: keyConfig + adsPrefix)
+        return status > 0
+    }
+    
+    
+}
