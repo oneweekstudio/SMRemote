@@ -262,6 +262,13 @@ extension SMAdsManager : FBInterstitialAdDelegate {
 //MARK:- Banner
 extension SMAdsManager {
     
+    /// Gọi hàm để hiển thị banner
+    ///
+    /// - Parameters:
+    ///   - controller: controller nơi chứa banner
+    ///   - bannerView: IBOutlet bannerview
+    ///   - height: Constraint Banner view
+    ///   - keyConfig: keyBanner
     open func showBannerAds( present controller: UIViewController, bannerView: SMAdsBannerView, bannerHeight height : NSLayoutConstraint, keyConfig: String) {
         let bannerUnit = SMAdsManager.shared.quangcao.banner
         
