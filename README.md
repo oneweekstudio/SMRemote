@@ -175,11 +175,6 @@ func loadConfig() {
     SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
 }
 ````
-Tham khảo
-====
-- Link: https://developers.google.com/admob/ios/quick-start
-
-
 Kết quả
 ====
 <p align="center"><img src="screenshot/step4.png" width = "50%", height = "auto" ></p>
