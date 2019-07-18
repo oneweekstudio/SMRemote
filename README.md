@@ -1,14 +1,9 @@
 <p align="center"><img src="screenshot/logo.png" width = "auto", height = "auto" ></p>
 
+#Hướng dẫn sử dụng:
 
-REMOTE CONFIG
-=======
-
-Hướng dẫn sử dụng:
-=======
-
-+ FIREBASE REMOTE CONFIG
-- Config key mặc định:
+##FIREBASE REMOTE CONFIG
+######Config key mặc định trong thằng FIREBASE:
 ````
   quangcao
   more_tool
