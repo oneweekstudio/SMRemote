@@ -39,6 +39,7 @@ open class SMRemote : NSObject {
 
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
             print("Quảng cáo : \(quangcao)")
+            SMAdsManager.shared.quangcao = AdsModel(quangcao)
         }
         
         let mirror = Mirror.init(reflecting: config)
@@ -46,7 +47,7 @@ open class SMRemote : NSObject {
             for i in mirror_super.children {
                 guard let key = i.label else { return }
                 guard let value = remoteConfig[key].numberValue as? Int else { return }
-                print("Super: nhận về key \(key) value \(value)")
+//                print("Super: nhận về key \(key) value \(value)")
                 self.set(key: key + adsPrefix, value: value)
                 self.set(key: key + adsPrefixCounter, value: 1)
             }
@@ -55,7 +56,7 @@ open class SMRemote : NSObject {
         for i in mirror.children {
             guard let key = i.label else { return }
             guard let value = remoteConfig[key].numberValue as? Int else { return }
-            print("Child: nhận về key \(key) value \(value)")
+//            print("Child: nhận về key \(key) value \(value)")
             self.set(key: key + adsPrefix, value: value)
             self.set(key: key + adsPrefixCounter, value: 1)
         }
