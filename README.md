@@ -186,5 +186,5 @@ Kết quả
 <p>
 <img src="screenshot/step4.png" width = "30%", height = "auto" >
 <img src="screenshot/step5.png" width = "30%", height = "auto" >
-<img src="screenshot/step5.png" width = "30%", height = "auto" >
+<img src="screenshot/step6.png" width = "30%", height = "auto" >
 </p>
