@@ -2,8 +2,8 @@
 
 Hướng dẫn sử dụng:
 =====
-FIREBASE REMOTE CONFIG
-Config key mặc định trong thằng FIREBASE:
+Cấu hình
+> Config key mặc định trong thằng FIREBASE:
 ````
   quangcao
   more_tool
