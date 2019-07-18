@@ -1,6 +1,6 @@
 <p align="center"><img src="screenshot/logo.png" width = "auto", height = "auto" ></p>
 
-Hướng dẫn sử dụng:
+Bước 1: FIREBASE
 =====
 
 - Cấu hình trong firebase remote config
@@ -80,3 +80,34 @@ Hướng dẫn sử dụng:
 ````
 > Demo firebase config. Chúng ta có thể tạo một số thuộc tính khác cần thiết: ví dụ : banner_home
 <p align="center"><img src="screenshot/step1.png" width = "auto", height = "auto" ></p>
+
+Bước 2: PROJECT
+=====
+- Review về SMConfig chút: không dùng property default_loop và default_start cũng chẳng sao cả!
+````
+import Foundation
+open class SMConfig : NSObject {
+
+    @objc open var ad_dialog_start = 1
+    @objc open var ad_dialog_loop = 1
+    @objc open var more_tool = 1
+
+    @objc open var default_start = 1
+    @objc open var default_loop = 2
+
+}
+````
+- Tạo 1 class kế thừa từ thằng SMConfig kia theo demo.
+````
+import Foundation
+open class Dev : SMConfig {
+
+    @objc var custom_property = 1
+    @objc var banner_home = 1
+}
+
+````
+Thế là bạn đã hoàn thành các bước config rồi.
+
+Bước 3: Thần code trong 1 nốt nhạc
+====
