@@ -118,7 +118,8 @@ Bước 3: Thần code trong 1 nốt nhạc
 ====
 > Cài đặt thư viện:
 ````
-pod 'SMRemote'
+pod 'SMRemote', :git => 'https://github.com/oneweekstudio/SMRemote.git', :branch => 'master'
+
 ````
 > Import nó trong header. hoặc trong class tùy chỉnh
 ````
