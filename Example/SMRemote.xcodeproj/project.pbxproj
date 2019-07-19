@@ -31,7 +31,7 @@
 /* Begin PBXFileReference section */
 		2929528122DF0861002FF8D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2EDF57D64A0833BB0C3453B3 /* Pods-SMRemote_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SMRemote_Example.release.xcconfig"; path = "Target Support Files/Pods-SMRemote_Example/Pods-SMRemote_Example.release.xcconfig"; sourceTree = "<group>"; };
-		3537A0D51C0DB94346E706E4 /* SMRemote.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SMRemote.podspec; path = ../SMRemote.podspec; sourceTree = "<group>"; };
+		3537A0D51C0DB94346E706E4 /* SMRemote.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SMRemote.podspec; path = ../SMRemote.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* SMRemote_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SMRemote_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
