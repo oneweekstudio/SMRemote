@@ -53,54 +53,63 @@ open class SMAdsManager : NSObject {
     ///   - completionHandler: sau khi hiển thị quảng cáo xong, chạy vào completionHandler.
     open func showFull( controller: UIViewController,  start: String ,  loop : String , completionHandler : ((Bool) -> Void)?) {
         
+        
+        
         let userDefault = UserDefaults.standard
         
-        let startConfig = userDefault.integer(forKey: start + adsPrefix)
-        let loopConfig = userDefault.integer(forKey: loop + adsPrefix)
-        
-        let startCounter = userDefault.integer(forKey: start + adsPrefixCounter)
-        let loopCounter = userDefault.integer(forKey: loop + adsPrefixCounter)
-        
-        self.plusCounter(key: start + adsPrefixCounter, value: startCounter)
-        
-        print("\(start + adsPrefix) \(startConfig) \(loop +  adsPrefix) \(loopConfig) ")
-        print("\(start + adsPrefixCounter) \(startCounter) \(loop +  adsPrefixCounter) \(loopCounter) ")
-        
-        if startCounter > startConfig {
-            self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
-            if loopCounter - 1 == loopConfig  {
-                self.resetCounter(key: loop + adsPrefixCounter)
-                //Show ads
-                //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
-                //                    if success {
-                //                        self.admob.present(fromRootViewController: controller)
-                //                    } else {
-                //                        completionHandler?(true)
-                //                    }
-                //                })
-                self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
-                    completionHandler?(success)
-                }
-            } else {
-                completionHandler?(true)
-            }
+        if userDefault.bool(forKey: "purchase") {
+            completionHandler?(true)
         } else {
-            if startCounter == startConfig {
-                //Show ads
-                //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
-                //                    if success {
-                //                        self.admob.present(fromRootViewController: controller)
-                //                    } else {
-                //                        completionHandler?(true)
-                //                    }
-                //                })
-                self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
-                    completionHandler?(success)
+            let startConfig = userDefault.integer(forKey: start + adsPrefix)
+            let loopConfig = userDefault.integer(forKey: loop + adsPrefix)
+            
+            let startCounter = userDefault.integer(forKey: start + adsPrefixCounter)
+            let loopCounter = userDefault.integer(forKey: loop + adsPrefixCounter)
+            
+            self.plusCounter(key: start + adsPrefixCounter, value: startCounter)
+            
+            print("\(start + adsPrefix) \(startConfig) \(loop +  adsPrefix) \(loopConfig) ")
+            print("\(start + adsPrefixCounter) \(startCounter) \(loop +  adsPrefixCounter) \(loopCounter) ")
+            
+            if startCounter > startConfig {
+                self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
+                if loopCounter - 1 == loopConfig  {
+                    self.resetCounter(key: loop + adsPrefixCounter)
+                    //Show ads
+                    //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
+                    //                    if success {
+                    //                        self.admob.present(fromRootViewController: controller)
+                    //                    } else {
+                    //                        completionHandler?(true)
+                    //                    }
+                    //                })
+                    self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
+                        completionHandler?(success)
+                    }
+                } else {
+                    completionHandler?(true)
                 }
             } else {
-                completionHandler?(true)
+                if startCounter == startConfig {
+                    //Show ads
+                    //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
+                    //                    if success {
+                    //                        self.admob.present(fromRootViewController: controller)
+                    //                    } else {
+                    //                        completionHandler?(true)
+                    //                    }
+                    //                })
+                    self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
+                        completionHandler?(success)
+                    }
+                } else {
+                    completionHandler?(true)
+                }
             }
         }
+        
+        
+      
     }
     
     /// Chuyển các counter về 1
@@ -270,17 +279,26 @@ extension SMAdsManager {
     ///   - height: Constraint Banner view
     ///   - keyConfig: keyBanner
     open func showBannerAds( present controller: UIViewController, bannerView: SMAdsBannerView, bannerHeight height : NSLayoutConstraint, keyConfig: String) {
-        let bannerUnit = SMAdsManager.shared.quangcao.banner
         
-        bannerView.rootViewController = controller
+        let userDefault = UserDefaults.standard
         
-        bannerView.bannerUnit = bannerUnit
-        
-        if enableBannerAds(keyConfig: keyConfig) {
-            height.constant = SMAdsBannerView.bannerHeight
-        } else {
+        if userDefault.bool(forKey: "purchase") {
             height.constant = 0
+        } else {
+            let bannerUnit = SMAdsManager.shared.quangcao.banner
+            
+            bannerView.rootViewController = controller
+            
+            bannerView.bannerUnit = bannerUnit
+            
+            if enableBannerAds(keyConfig: keyConfig) {
+                height.constant = SMAdsBannerView.bannerHeight
+            } else {
+                height.constant = 0
+            }
         }
+        
+
         
         bannerView.updateConstraints()
         controller.view.layoutSubviews()
