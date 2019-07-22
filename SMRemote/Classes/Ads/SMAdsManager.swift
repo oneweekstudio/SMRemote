@@ -56,8 +56,8 @@ open class SMAdsManager : NSObject {
         
         
         let userDefault = UserDefaults.standard
-        
-        if userDefault.bool(forKey: "purchase") {
+        let object = userDefault.integer(forKey: "purchase")
+        if object > 0 {
             completionHandler?(true)
         } else {
             let startConfig = userDefault.integer(forKey: start + adsPrefix)
@@ -281,8 +281,9 @@ extension SMAdsManager {
     open func showBannerAds( present controller: UIViewController, bannerView: SMAdsBannerView, bannerHeight height : NSLayoutConstraint, keyConfig: String) {
         
         let userDefault = UserDefaults.standard
+        let object = userDefault.integer(forKey: "purchase")
         
-        if userDefault.bool(forKey: "purchase") {
+        if object > 0 {
             height.constant = 0
         } else {
             let bannerUnit = SMAdsManager.shared.quangcao.banner
