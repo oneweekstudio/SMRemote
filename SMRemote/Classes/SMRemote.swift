@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseRemoteConfig
+import GoogleMobileAds
 open class SMRemote : NSObject {
     
 //    static let prefix:String = "_counter"

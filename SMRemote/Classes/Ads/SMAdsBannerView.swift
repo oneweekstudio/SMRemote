@@ -71,6 +71,18 @@ open class SMAdsBannerView : UIView {
 
         self.addConstraints([top, bottom, left, right])
     }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        if bannerUnit != nil {
+            if bannerUnit.network == "admob" {
+                self.addConstraintAdsView(ads: admobView)
+            } else if bannerUnit.network == "facebook" {
+                self.addConstraintAdsView(ads: facebookView)
+            }
+        }
+      
+    }
 
 }
 
