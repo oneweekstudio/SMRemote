@@ -63,24 +63,27 @@ open class SMAdsBannerView : UIView {
         
         let top = NSLayoutConstraint.init(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 5)
         
-        let bottom = NSLayoutConstraint.init(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 5)
+        let bottom = NSLayoutConstraint.init(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -5)
 
         let left = NSLayoutConstraint.init(item: view, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0)
         
         let right = NSLayoutConstraint.init(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0)
 
         self.addConstraints([top, bottom, left, right])
+        view.layoutIfNeeded()
+        view.updateConstraintsIfNeeded()
+        
     }
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        if bannerUnit != nil {
-            if bannerUnit.network == "admob" {
-                self.addConstraintAdsView(ads: admobView)
-            } else if bannerUnit.network == "facebook" {
-                self.addConstraintAdsView(ads: facebookView)
-            }
-        }
+//        if bannerUnit != nil {
+//            if bannerUnit.network == "admob" {
+//                self.addConstraintAdsView(ads: admobView)
+//            } else if bannerUnit.network == "facebook" {
+//                self.addConstraintAdsView(ads: facebookView)
+//            }
+//        }
       
     }
 
