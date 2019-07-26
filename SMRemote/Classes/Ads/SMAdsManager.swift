@@ -7,8 +7,8 @@
 
 import Foundation
 import GoogleMobileAds
-import PKHUD
 import FBAudienceNetwork
+import iProgressHUD
 
 //MARK:- Config
 let adsPrefixCounter:String = "_ads_counter"
@@ -38,11 +38,37 @@ open class SMAdsManager : NSObject {
     
     fileprivate var admob: GADInterstitial!
     fileprivate var facebook: FBInterstitialAd!
+    fileprivate var controller: UIViewController?
     
     var isDebug:Bool = true
     
     /// Khi quảng cáo thực thi xong ( true hay fail ) nó sẽ sử dụng hàm này
     fileprivate var interstitialDidCompled : ((Bool) -> Void)?
+    
+    open func showLoading(vc: UIViewController) {
+        DispatchQueue.main.async {
+            let iprogress: iProgressHUD = iProgressHUD()
+            iprogress.iprogressStyle = .vertical
+            iprogress.indicatorStyle = .ballPulse
+            iprogress.isShowModal = true
+            iprogress.isShowCaption = true
+            iprogress.modalColor = .black
+            iprogress.boxSize = 30
+//            iprogress.indicatorSize = 50
+            iprogress.captionSize = 14
+            iprogress.attachProgress(toViews: vc.view)
+            vc.view.updateCaption(text: "Loading Ads")
+
+            vc.view.showProgress()
+        }
+    }
+    
+    open func hideLoading(vc: UIViewController?) {
+        DispatchQueue.main.async {
+            guard let vc = vc else { return }
+            vc.view.dismissProgress()
+        }
+    }
     
     /// Hiển thị quảng cáo full với start loop
     ///
@@ -53,7 +79,7 @@ open class SMAdsManager : NSObject {
     ///   - completionHandler: sau khi hiển thị quảng cáo xong, chạy vào completionHandler.
     open func showFull( controller: UIViewController,  start: String ,  loop : String , completionHandler : ((Bool) -> Void)?) {
         
-        
+        self.controller = controller
         
         let userDefault = UserDefaults.standard
         let object = userDefault.integer(forKey: "purchase")
@@ -158,9 +184,7 @@ open class SMAdsManager : NSObject {
     ///   - controller: controller cần hiển thị loadding và present quảng cáo
     ///   - completionHandler: Việc hoàn thiện này cần thằng Delegate thực thi xong và trả về
     private func loadGADInterstitial(controller: UIViewController, completionHandler:((Bool) -> Void)?) {
-        DispatchQueue.main.async {
-            HUD.show(.labeledProgress(title: nil, subtitle: "load ads..."), onView: controller.view)
-        }
+        self.showLoading(vc: controller)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
             print("SMAdsManager: Load full with id: \(self.quangcao.full.ads_id)")
@@ -184,9 +208,7 @@ open class SMAdsManager : NSObject {
     ///   - controller: controller cần hiển thị loadding và present quảng cáo
     ///   - completionHandler: Việc hoàn thiện này cần thằng Delegate thực thi xong và trả về
     private func loadFBInterstitialAd( controller: UIViewController, completionHandler :((Bool) -> Void)?) {
-        DispatchQueue.main.async {
-            HUD.show(.labeledProgress(title: nil, subtitle: "load ads..."), onView: controller.view)
-        }
+        self.showLoading(vc: controller)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
             print("SMAdsManager: Load full with id: \(self.quangcao.full.ads_id)")
@@ -212,14 +234,14 @@ extension SMAdsManager : GADInterstitialDelegate {
     public func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("SMAdsManager:ADMOB:interstitialDidReceiveAd")
         interstitialDidCompled?(true)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
     
     /// Tells the delegate an ad request failed.
     public func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print("SMAdsManager:ADMOB:interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
         interstitialDidCompled?(false)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
     
     /// Tells the delegate that an interstitial will be presented.
@@ -236,7 +258,7 @@ extension SMAdsManager : GADInterstitialDelegate {
     public func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         //        print("SMAdsManager:interstitialDidDismissScreen")
         interstitialDidCompled?(false)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
     
     /// Tells the delegate that a user click will open another app
@@ -252,18 +274,18 @@ extension SMAdsManager : FBInterstitialAdDelegate {
     public func interstitialAdDidLoad(_ interstitialAd: FBInterstitialAd) {
         print("SMAdsManager:FB:interstitialDidReceiveAd")
         interstitialDidCompled?(true)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
     
     public func interstitialAd(_ interstitialAd: FBInterstitialAd, didFailWithError error: Error) {
         print("SMAdsManager:interstitial:FB:didFailToReceiveAdWithError: \(error.localizedDescription)")
         interstitialDidCompled?(false)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
     
     public func interstitialAdDidClose(_ interstitialAd: FBInterstitialAd) {
         interstitialDidCompled?(false)
-        HUD.hide()
+        self.hideLoading(vc: self.controller)
     }
 }
 
