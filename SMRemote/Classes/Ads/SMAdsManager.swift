@@ -99,16 +99,9 @@ open class SMAdsManager : NSObject {
             
             if startCounter > startConfig {
                 self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
-                if loopCounter - 1 == loopConfig  {
+                if loopCounter == loopConfig  {
                     self.resetCounter(key: loop + adsPrefixCounter)
                     //Show ads
-                    //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
-                    //                    if success {
-                    //                        self.admob.present(fromRootViewController: controller)
-                    //                    } else {
-                    //                        completionHandler?(true)
-                    //                    }
-                    //                })
                     self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
                         completionHandler?(success)
                     }
@@ -118,13 +111,6 @@ open class SMAdsManager : NSObject {
             } else {
                 if startCounter == startConfig {
                     //Show ads
-                    //                self.loadGADInterstitial(controller: controller, completionHandler: { success in
-                    //                    if success {
-                    //                        self.admob.present(fromRootViewController: controller)
-                    //                    } else {
-                    //                        completionHandler?(true)
-                    //                    }
-                    //                })
                     self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
                         completionHandler?(success)
                     }
