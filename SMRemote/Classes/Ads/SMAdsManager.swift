@@ -97,25 +97,29 @@ open class SMAdsManager : NSObject {
             print("\(start + adsPrefix) \(startConfig) \(loop +  adsPrefix) \(loopConfig) ")
             print("\(start + adsPrefixCounter) \(startCounter) \(loop +  adsPrefixCounter) \(loopCounter) ")
             
-            if startCounter > startConfig {
-                self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
-                if loopCounter == loopConfig  {
-                    self.resetCounter(key: loop + adsPrefixCounter)
-                    //Show ads
-                    self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
-                        completionHandler?(success)
-                    }
-                } else {
-                    completionHandler?(true)
-                }
+            if startConfig == 0 && loopConfig == 0 {
+                completionHandler?(true)
             } else {
-                if startCounter == startConfig {
-                    //Show ads
-                    self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
-                        completionHandler?(success)
+                if startCounter > startConfig {
+                    self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
+                    if loopCounter - 1 == loopConfig  {
+                        self.resetCounter(key: loop + adsPrefixCounter)
+                        //Show ads
+                        self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
+                            completionHandler?(success)
+                        }
+                    } else {
+                        completionHandler?(true)
                     }
                 } else {
-                    completionHandler?(true)
+                    if startCounter == startConfig {
+                        //Show ads
+                        self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
+                            completionHandler?(success)
+                        }
+                    } else {
+                        completionHandler?(true)
+                    }
                 }
             }
         }
