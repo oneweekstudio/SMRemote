@@ -302,13 +302,14 @@ extension SMAdsManager {
         if object > 0 {
             height.constant = 0
         } else {
+            
             let bannerUnit = SMAdsManager.shared.quangcao.banner
             
             bannerView.rootViewController = controller
             
             bannerView.bannerUnit = bannerUnit
             
-            if enableBannerAds(keyConfig: keyConfig) {
+            if enableBannerAds(keyConfig: keyConfig) && bannerUnit.status == 1{
                 height.constant = SMAdsBannerView.bannerHeight
             } else {
                 height.constant = 0

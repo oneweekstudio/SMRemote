@@ -28,10 +28,12 @@ open class SMAdsBannerView : UIView {
     
     private func initAds() {
         self.backgroundColor = UIColor.clear
-        if bannerUnit.network == "admob" {
-            self.loadGADBannerView()
-        } else if bannerUnit.network == "facebook" {
-            self.loadFBAdView()
+        if bannerUnit.status == 1 {
+            if bannerUnit.network == "admob" {
+                self.loadGADBannerView()
+            } else if bannerUnit.network == "facebook" {
+                self.loadFBAdView()
+            }
         }
     }
     
