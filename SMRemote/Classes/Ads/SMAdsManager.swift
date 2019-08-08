@@ -147,21 +147,25 @@ open class SMAdsManager : NSObject {
     }
     
     private func requestAds( controller : UIViewController, quangcao: AdsModel , completionHandler: ((Bool) -> Void)?) {
-        if quangcao.full.network == "facebook" {
-            self.loadFBInterstitialAd(controller: controller) { (success) in
-                if success {
-                    self.facebook.show(fromRootViewController: controller)
-                } else {
-                    completionHandler?(true)
+        if quangcao.full.status == 1 {
+            if quangcao.full.network == "facebook" {
+                self.loadFBInterstitialAd(controller: controller) { (success) in
+                    if success {
+                        self.facebook.show(fromRootViewController: controller)
+                    } else {
+                        completionHandler?(true)
+                    }
                 }
-            }
-        } else if quangcao.full.network == "admob" {
-            self.loadGADInterstitial(controller: controller) { (success) in
-                if success {
-                    self.admob.present(fromRootViewController: controller)
-                } else {
-                    completionHandler?(true)
+            } else if quangcao.full.network == "admob" {
+                self.loadGADInterstitial(controller: controller) { (success) in
+                    if success {
+                        self.admob.present(fromRootViewController: controller)
+                    } else {
+                        completionHandler?(true)
+                    }
                 }
+            } else {
+                completionHandler?(false)
             }
         } else {
             completionHandler?(false)
