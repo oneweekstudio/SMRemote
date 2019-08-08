@@ -40,7 +40,7 @@ open class SMAdsManager : NSObject {
     fileprivate var facebook: FBInterstitialAd!
     fileprivate var controller: UIViewController?
     
-    var isDebug:Bool = true
+    var isDebug:Bool = false
     
     /// Khi quảng cáo thực thi xong ( true hay fail ) nó sẽ sử dụng hàm này
     fileprivate var interstitialDidCompled : ((Bool) -> Void)?
