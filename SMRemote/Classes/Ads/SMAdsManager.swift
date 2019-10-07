@@ -38,12 +38,20 @@ open class SMAdsManager : NSObject {
     
     fileprivate var admob: GADInterstitial!
     fileprivate var facebook: FBInterstitialAd!
-    fileprivate var controller: UIViewController?
+    fileprivate var admobReward: GADRewardBasedVideoAd!
     
+    fileprivate var controller: UIViewController?
+    fileprivate var rewardController: UIViewController?
+
     var isDebug:Bool = false
     
     /// Khi quảng cáo thực thi xong ( true hay fail ) nó sẽ sử dụng hàm này
     fileprivate var interstitialDidCompled : ((Bool) -> Void)?
+    
+    fileprivate var rewardDidLoadComplete : (() -> Void)?
+    fileprivate var rewardDidLoadFailure : (() -> Void)?
+    fileprivate var rewardDidWatch : (() -> Void)?
+    fileprivate var rewardDidClose : (() -> Void)?
     
     open func showLoading(vc: UIViewController) {
         DispatchQueue.main.async {
@@ -123,9 +131,6 @@ open class SMAdsManager : NSObject {
                 }
             }
         }
-        
-        
-      
     }
     
     /// Chuyển các counter về 1
@@ -191,7 +196,7 @@ open class SMAdsManager : NSObject {
             self.admob.delegate = self
             if self.isDebug {
                 print("DEBUG ENABLE : kGADSimulatorID  \(kGADSimulatorID)")
-                request.testDevices = [kGADSimulatorID]
+                //request.testDevices = [kGADSimulatorID]
             }
         }
     }
@@ -328,5 +333,85 @@ extension SMAdsManager {
         return status > 0
     }
     
+    
+}
+
+
+extension SMAdsManager : GADRewardBasedVideoAdDelegate{
+    
+    
+    /// Hiện thị quảng cáo reward
+    ///
+    /// - Parameters:
+    ///   - controller: Controller cần hiển thị quảng cáo reward
+    ///   - completionHandler: Khi hoàn thiện (được trả lại biến cho SMAdsManager)
+    ///   - failureHandler: Khi không hoàn thiện (được trả lại biến cho SMAdsManager)
+    open func showReward( controller: UIViewController, rewardDidLoadComplete : (() -> Void)?, rewardDidLoadFailure : (() -> Void)?, rewardDidWatch:  (() -> Void)?,rewardDidClose: (() -> Void)? ) {
+        self.rewardController = controller
+        self.rewardDidLoadComplete = rewardDidLoadComplete
+        self.rewardDidLoadFailure = rewardDidLoadFailure
+        self.rewardDidWatch = rewardDidWatch
+        self.rewardDidClose = rewardDidClose
+        self.requestReward()
+    }
+    
+    private func requestReward() {
+        if quangcao.reward.status == 1 {
+            GADRewardBasedVideoAd.sharedInstance().delegate = self
+            GADRewardBasedVideoAd.sharedInstance().load(GADRequest(),
+                                                        withAdUnitID: quangcao.reward.ads_id)
+        } else {
+            
+        }
+    }
+    
+    private func reloadReward() {
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(),
+                                                    withAdUnitID: quangcao.reward.ads_id)
+    }
+    
+    private func checkRewardIsReady () -> Bool {
+        return GADRewardBasedVideoAd.sharedInstance().isReady
+    }
+    
+   public func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didRewardUserWith reward: GADAdReward) {
+        print("Reward received with currency: \(reward.type), amount \(reward.amount).")
+        self.rewardDidWatch?()
+    }
+    
+   public func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd:GADRewardBasedVideoAd) {
+        print("Reward based video ad is received.")
+        guard let vc = self.rewardController else { return }
+        GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: vc)
+        self.rewardDidLoadComplete?()
+    }
+    
+   public func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Opened reward based video ad.")
+    }
+    
+   public func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad started playing.")
+    }
+    
+   public func rewardBasedVideoAdDidCompletePlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad has completed.")
+    }
+    
+   public func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad is closed.")
+        self.rewardDidClose?()
+    }
+    
+   public func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad will leave application.")
+    }
+    
+   public func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didFailToLoadWithError error: Error) {
+        print("Reward based video ad failed to load.")
+        self.rewardDidClose?()
+    }
     
 }

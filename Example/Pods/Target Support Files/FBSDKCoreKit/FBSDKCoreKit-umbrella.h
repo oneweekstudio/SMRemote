@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "FBSDKBasicUtility.h"
 
 FOUNDATION_EXPORT double FBSDKCoreKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char FBSDKCoreKitVersionString[];

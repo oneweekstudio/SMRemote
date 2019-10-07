@@ -45,6 +45,19 @@ class ViewController: UIViewController {
         SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
     }
 
+    
+    @IBAction func showReward(_ sender: Any){
+        SMAdsManager.shared.showReward(controller: self,
+        rewardDidLoadComplete: {
+            //
+        }, rewardDidLoadFailure: {
+            
+        }, rewardDidWatch: {
+            //Trả thưởng
+        }, rewardDidClose:  {
+            //
+        })
+    }
 }
 
 

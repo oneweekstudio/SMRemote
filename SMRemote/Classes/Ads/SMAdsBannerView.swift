@@ -44,7 +44,7 @@ open class SMAdsBannerView : UIView {
         admobView.rootViewController = rootViewController
         let request = GADRequest()
         if SMAdsManager.shared.isDebug {
-            request.testDevices = [kGADSimulatorID]
+          //  request.testDevices = [kGADSimulatorID]
         }
         self.addSubview(admobView)
         admobView.load(request)
