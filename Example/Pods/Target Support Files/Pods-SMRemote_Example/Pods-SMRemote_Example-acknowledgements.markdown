@@ -1913,6 +1913,14 @@ Copyright 2019 Google
    limitations under the License.
 
 
+## GoogleMobileAdsMediationFacebook
+
+Copyright 2016 Google Inc.
+
+## GoogleMobileAdsMediationUnity
+
+Copyright 2016 Google Inc.
+
 ## GoogleUtilities
 
 

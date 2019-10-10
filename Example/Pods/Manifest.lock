@@ -61,6 +61,12 @@ PODS:
   - GoogleDataTransportCCTSupport (1.1.0):
     - GoogleDataTransport (~> 2.0)
     - nanopb
+  - GoogleMobileAdsMediationFacebook (5.5.1.1):
+    - FBAudienceNetwork (= 5.5.1)
+    - Google-Mobile-Ads-SDK (>= 7.50.0)
+  - GoogleMobileAdsMediationUnity (3.2.0.1):
+    - Google-Mobile-Ads-SDK (>= 7.49.0)
+    - UnityAds (= 3.2.0)
   - GoogleUtilities/AppDelegateSwizzler (6.3.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -93,8 +99,11 @@ PODS:
     - Firebase/Core
     - Firebase/RemoteConfig
     - Google-Mobile-Ads-SDK
+    - GoogleMobileAdsMediationFacebook
+    - GoogleMobileAdsMediationUnity
     - iProgressHUD
     - MagicMapper
+  - UnityAds (3.2.0)
 
 DEPENDENCIES:
   - SMRemote (from `../`)
@@ -116,11 +125,14 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
+    - GoogleMobileAdsMediationFacebook
+    - GoogleMobileAdsMediationUnity
     - GoogleUtilities
     - iProgressHUD
     - MagicMapper
     - nanopb
     - Protobuf
+    - UnityAds
 
 EXTERNAL SOURCES:
   SMRemote:
@@ -142,13 +154,16 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 0ae90be1cc4dad40f4a27fc767ef59fa032ec87b
   GoogleDataTransport: c8617c00e4f3eb9418e42ac0e8ac5241a9d555dd
   GoogleDataTransportCCTSupport: 9f352523e8785a71f6754f51eeff09f49ec19268
+  GoogleMobileAdsMediationFacebook: ceceecd3bdefeaa0e050bd6101679a8d7425233b
+  GoogleMobileAdsMediationUnity: 19134e912e3e98b11f3674d4f0c695ae623088ec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   iProgressHUD: caa742128253c97f2c2e1ec59e2bbe6cf689df6a
   MagicMapper: 1909d0e15b7a3ef7faec2c5e30791eed0815e934
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
-  SMRemote: 455d87dfd80d52fe42c9a9aaa60618a43dc675df
+  SMRemote: 846c8debed1d20eac22efd5817beed2bc822c660
+  UnityAds: 2bc7ff1fd9d659745f0920df6084ba5bf9548bc8
 
-PODFILE CHECKSUM: 1407c3602bd20d8886782062eebf2cfb50e2e414
+PODFILE CHECKSUM: 5dcd1ceb3f189614d74004572d4d1a95472199a3
 
 COCOAPODS: 1.8.3

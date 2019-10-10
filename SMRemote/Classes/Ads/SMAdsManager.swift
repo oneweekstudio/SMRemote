@@ -232,6 +232,7 @@ extension SMAdsManager : GADInterstitialDelegate {
     /// Tells the delegate an ad request succeeded.
     public func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("SMAdsManager:ADMOB:interstitialDidReceiveAd")
+        print("Interstitial adapter class name: \(ad.responseInfo?.adNetworkClassName)")
         interstitialDidCompled?(true)
         self.hideLoading(vc: self.controller)
     }
@@ -382,6 +383,7 @@ extension SMAdsManager : GADRewardBasedVideoAdDelegate{
     
    public func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd:GADRewardBasedVideoAd) {
         print("Reward based video ad is received.")
+        print("Rewarded video adapter class name: \(rewardBasedVideoAd.adNetworkClassName)")
         guard let vc = self.rewardController else { return }
         GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: vc)
         self.rewardDidLoadComplete?()

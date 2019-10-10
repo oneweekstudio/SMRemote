@@ -48,10 +48,15 @@ Pod::Spec.new do |s|
   s.ios.dependency 'Firebase/RemoteConfig'
   s.ios.dependency 'Firebase/Analytics'
   s.ios.dependency 'MagicMapper'
+  s.ios.dependency 'iProgressHUD'
+  
+  #Ads
   s.ios.dependency 'Google-Mobile-Ads-SDK'
   s.ios.dependency 'FBAudienceNetwork'
   s.ios.dependency 'GoogleMobileAdsMediationFacebook'
-  s.ios.dependency 'iProgressHUD'
+  s.ios.dependency 'GoogleMobileAdsMediationUnity'
+  s.ios.dependency 'GoogleMobileAdsMediationVungle'
+#
 #  s.frameworks = [
 #    'Firebase'
 #  ]

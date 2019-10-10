@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import GoogleMobileAds
 import FBAudienceNetwork
-
+import FacebookAdapter
 
 open class SMAdsBannerView : UIView {
     
@@ -29,12 +29,38 @@ open class SMAdsBannerView : UIView {
     private func initAds() {
         self.backgroundColor = UIColor.clear
         if bannerUnit.status == 1 {
-            if bannerUnit.network == "admob" {
+            
+            switch bannerUnit.network {
+            case "admob":
                 self.loadGADBannerView()
-            } else if bannerUnit.network == "facebook" {
+                break
+            case "facebook":
                 self.loadFBAdView()
+                break
+            case "mediation":
+                self.loadMediation()
+            default:
+                break
             }
         }
+    }
+    
+    private func loadMediation() {
+        admobView = GADBannerView.init(adSize: kGADAdSizeSmartBannerPortrait)
+        admobView.adUnitID = bannerUnit.ads_id
+        admobView.delegate = self
+        admobView.rootViewController = rootViewController
+        
+        let request = GADRequest()
+        
+        //Facebook mediation
+        let extras = GADFBNetworkExtras()
+        extras.nativeAdFormat = .nativeBanner
+        request.register(extras)
+        
+        self.addSubview(admobView)
+        admobView.load(request)
+        self.addConstraintAdsView(ads: admobView)
     }
     
     private func loadGADBannerView() {
@@ -43,9 +69,6 @@ open class SMAdsBannerView : UIView {
         admobView.delegate = self
         admobView.rootViewController = rootViewController
         let request = GADRequest()
-        if SMAdsManager.shared.isDebug {
-          //  request.testDevices = [kGADSimulatorID]
-        }
         self.addSubview(admobView)
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)
@@ -66,11 +89,11 @@ open class SMAdsBannerView : UIView {
         let top = NSLayoutConstraint.init(item: view, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 5)
         
         let bottom = NSLayoutConstraint.init(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: -5)
-
+        
         let left = NSLayoutConstraint.init(item: view, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0)
         
         let right = NSLayoutConstraint.init(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0)
-
+        
         self.addConstraints([top, bottom, left, right])
         view.layoutIfNeeded()
         view.updateConstraintsIfNeeded()
@@ -79,29 +102,30 @@ open class SMAdsBannerView : UIView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-//        if bannerUnit != nil {
-//            if bannerUnit.network == "admob" {
-//                self.addConstraintAdsView(ads: admobView)
-//            } else if bannerUnit.network == "facebook" {
-//                self.addConstraintAdsView(ads: facebookView)
-//            }
-//        }
-      
+        //        if bannerUnit != nil {
+        //            if bannerUnit.network == "admob" {
+        //                self.addConstraintAdsView(ads: admobView)
+        //            } else if bannerUnit.network == "facebook" {
+        //                self.addConstraintAdsView(ads: facebookView)
+        //            }
+        //        }
+        
     }
-
+    
 }
 
 
 extension SMAdsBannerView : GADBannerViewDelegate {
-  
+    
     public func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GADBannerView : adViewDidReceiveAd")
+        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName)")
         self.backgroundColor = UIColor.black
     }
     
     public func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("GADBannerView : didFailToReceiveAdWithError \(error.localizedDescription)")
-
+        
     }
 }
 
