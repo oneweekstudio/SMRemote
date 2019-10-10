@@ -87,7 +87,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.10.0)
-  - SMRemote (1.0.1):
+  - SMRemote (1.0.2):
     - FBAudienceNetwork
     - Firebase/Analytics
     - Firebase/Core
@@ -100,7 +100,7 @@ DEPENDENCIES:
   - SMRemote (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FBAudienceNetwork
     - FBSDKCoreKit
     - Firebase
@@ -147,8 +147,8 @@ SPEC CHECKSUMS:
   MagicMapper: 1909d0e15b7a3ef7faec2c5e30791eed0815e934
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
-  SMRemote: 9c055ede1d837b58b8f23347a3ab05fb19eec48c
+  SMRemote: 455d87dfd80d52fe42c9a9aaa60618a43dc675df
 
 PODFILE CHECKSUM: 1407c3602bd20d8886782062eebf2cfb50e2e414
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.3
