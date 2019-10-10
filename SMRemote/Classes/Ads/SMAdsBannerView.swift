@@ -10,6 +10,7 @@ import UIKit
 import GoogleMobileAds
 import FBAudienceNetwork
 import FacebookAdapter
+import VungleAdapter
 
 open class SMAdsBannerView : UIView {
     
@@ -58,6 +59,11 @@ open class SMAdsBannerView : UIView {
         extras.nativeAdFormat = .nativeBanner
         request.register(extras)
         
+        //Vungle mediation
+        let vungleExtras = VungleAdNetworkExtras()
+        vungleExtras.allPlacements = []
+        request.register(vungleExtras)
+        
         self.addSubview(admobView)
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)
@@ -102,14 +108,6 @@ open class SMAdsBannerView : UIView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        //        if bannerUnit != nil {
-        //            if bannerUnit.network == "admob" {
-        //                self.addConstraintAdsView(ads: admobView)
-        //            } else if bannerUnit.network == "facebook" {
-        //                self.addConstraintAdsView(ads: facebookView)
-        //            }
-        //        }
-        
     }
     
 }

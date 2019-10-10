@@ -67,6 +67,9 @@ PODS:
   - GoogleMobileAdsMediationUnity (3.2.0.1):
     - Google-Mobile-Ads-SDK (>= 7.49.0)
     - UnityAds (= 3.2.0)
+  - GoogleMobileAdsMediationVungle (6.3.2.3):
+    - Google-Mobile-Ads-SDK (>= 7.42.2)
+    - VungleSDK-iOS (= 6.3.2)
   - GoogleUtilities/AppDelegateSwizzler (6.3.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -101,9 +104,11 @@ PODS:
     - Google-Mobile-Ads-SDK
     - GoogleMobileAdsMediationFacebook
     - GoogleMobileAdsMediationUnity
+    - GoogleMobileAdsMediationVungle
     - iProgressHUD
     - MagicMapper
   - UnityAds (3.2.0)
+  - VungleSDK-iOS (6.3.2)
 
 DEPENDENCIES:
   - SMRemote (from `../`)
@@ -127,12 +132,14 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleMobileAdsMediationFacebook
     - GoogleMobileAdsMediationUnity
+    - GoogleMobileAdsMediationVungle
     - GoogleUtilities
     - iProgressHUD
     - MagicMapper
     - nanopb
     - Protobuf
     - UnityAds
+    - VungleSDK-iOS
 
 EXTERNAL SOURCES:
   SMRemote:
@@ -156,13 +163,15 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: 9f352523e8785a71f6754f51eeff09f49ec19268
   GoogleMobileAdsMediationFacebook: ceceecd3bdefeaa0e050bd6101679a8d7425233b
   GoogleMobileAdsMediationUnity: 19134e912e3e98b11f3674d4f0c695ae623088ec
+  GoogleMobileAdsMediationVungle: 3eb22937d8270947cb2e51bb0af6ca91f0c29c0d
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   iProgressHUD: caa742128253c97f2c2e1ec59e2bbe6cf689df6a
   MagicMapper: 1909d0e15b7a3ef7faec2c5e30791eed0815e934
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
-  SMRemote: 846c8debed1d20eac22efd5817beed2bc822c660
+  SMRemote: cba40da7ae05b9354b71a47d61733562eed3dfb5
   UnityAds: 2bc7ff1fd9d659745f0920df6084ba5bf9548bc8
+  VungleSDK-iOS: 69a7f407b60281d2954ffc5eeeac349fbfed51d6
 
 PODFILE CHECKSUM: 5dcd1ceb3f189614d74004572d4d1a95472199a3
 
