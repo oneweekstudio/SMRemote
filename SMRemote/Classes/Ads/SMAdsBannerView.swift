@@ -54,7 +54,7 @@ open class SMAdsBannerView : UIView {
         admobView.rootViewController = rootViewController
         
         let request = GADRequest()
-        
+
         //Facebook mediation config
         let extras = GADFBNetworkExtras()
         extras.nativeAdFormat = .nativeBanner
@@ -64,7 +64,7 @@ open class SMAdsBannerView : UIView {
         let vungleExtras = VungleAdNetworkExtras()
         vungleExtras.allPlacements = ["AdmobMediatedBanner"]
         request.register(vungleExtras)
-        
+                
         self.addSubview(admobView)
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)

@@ -64,6 +64,11 @@ PODS:
   - GoogleMobileAdsMediationFacebook (5.5.1.1):
     - FBAudienceNetwork (= 5.5.1)
     - Google-Mobile-Ads-SDK (>= 7.50.0)
+  - GoogleMobileAdsMediationTestSuite (1.1.0):
+    - Google-Mobile-Ads-SDK (>= 7.10.1)
+    - MaterialComponents/Cards (~> 76.1)
+    - MaterialComponents/Dialogs (~> 76.1)
+    - MaterialComponents/Tabs (~> 76.1)
   - GoogleMobileAdsMediationUnity (3.2.0.1):
     - Google-Mobile-Ads-SDK (>= 7.49.0)
     - UnityAds (= 3.2.0)
@@ -90,6 +95,57 @@ PODS:
     - GoogleUtilities/Logger
   - iProgressHUD (1.1.1)
   - MagicMapper (1.0.2)
+  - MaterialComponents/AnimationTiming (76.1.2)
+  - MaterialComponents/Buttons (76.1.2):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Shapes
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - MaterialComponents/Cards (76.1.2):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Icons/ic_check_circle
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Shapes
+  - MaterialComponents/Dialogs (76.1.2):
+    - MaterialComponents/Buttons
+    - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
+  - MaterialComponents/Ink (76.1.2):
+    - MaterialComponents/private/Math
+  - MaterialComponents/private/Application (76.1.2)
+  - MaterialComponents/private/Icons/Base (76.1.2)
+  - MaterialComponents/private/Icons/ic_check_circle (76.1.2):
+    - MaterialComponents/private/Icons/Base
+  - MaterialComponents/private/KeyboardWatcher (76.1.2):
+    - MaterialComponents/private/Application
+  - MaterialComponents/private/Math (76.1.2)
+  - MaterialComponents/ShadowElevations (76.1.2)
+  - MaterialComponents/ShadowLayer (76.1.2):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Shapes (76.1.2):
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/Tabs (76.1.2):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
+  - MaterialComponents/Typography (76.1.2):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -103,6 +159,7 @@ PODS:
     - Firebase/RemoteConfig
     - Google-Mobile-Ads-SDK
     - GoogleMobileAdsMediationFacebook
+    - GoogleMobileAdsMediationTestSuite
     - GoogleMobileAdsMediationUnity
     - GoogleMobileAdsMediationVungle
     - iProgressHUD
@@ -131,11 +188,15 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleMobileAdsMediationFacebook
+    - GoogleMobileAdsMediationTestSuite
     - GoogleMobileAdsMediationUnity
     - GoogleMobileAdsMediationVungle
     - GoogleUtilities
     - iProgressHUD
     - MagicMapper
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
     - nanopb
     - Protobuf
     - UnityAds
@@ -162,14 +223,18 @@ SPEC CHECKSUMS:
   GoogleDataTransport: c8617c00e4f3eb9418e42ac0e8ac5241a9d555dd
   GoogleDataTransportCCTSupport: 9f352523e8785a71f6754f51eeff09f49ec19268
   GoogleMobileAdsMediationFacebook: ceceecd3bdefeaa0e050bd6101679a8d7425233b
+  GoogleMobileAdsMediationTestSuite: 9776316cd4700df59a5b0b0b0ceb2ce545bfd131
   GoogleMobileAdsMediationUnity: 19134e912e3e98b11f3674d4f0c695ae623088ec
   GoogleMobileAdsMediationVungle: 3eb22937d8270947cb2e51bb0af6ca91f0c29c0d
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   iProgressHUD: caa742128253c97f2c2e1ec59e2bbe6cf689df6a
   MagicMapper: 1909d0e15b7a3ef7faec2c5e30791eed0815e934
+  MaterialComponents: 1aef341d47fbaed37ddb5163a01af94cb6da8506
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
-  SMRemote: cba40da7ae05b9354b71a47d61733562eed3dfb5
+  SMRemote: 55fea7f422c88bcbdbae744f87ccf085c839c25e
   UnityAds: 2bc7ff1fd9d659745f0920df6084ba5bf9548bc8
   VungleSDK-iOS: 69a7f407b60281d2954ffc5eeeac349fbfed51d6
 

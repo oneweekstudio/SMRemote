@@ -8,6 +8,7 @@
 
 import UIKit
 import SMRemote
+import GoogleMobileAdsMediationTestSuite
 
 class ViewController: UIViewController {
     
@@ -57,6 +58,10 @@ class ViewController: UIViewController {
         }, rewardDidClose:  {
             //
         })
+    }
+    
+    @IBAction func callTestSuite(_ sender: Any) {
+        GoogleMobileAdsMediationTestSuite.present(on:self, delegate:nil)
     }
 }
 
