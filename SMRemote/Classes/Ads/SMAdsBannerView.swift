@@ -47,6 +47,7 @@ open class SMAdsBannerView : UIView {
     }
     
     private func loadMediation() {
+        print(#function)
         admobView = GADBannerView.init(adSize: kGADAdSizeSmartBannerPortrait)
         admobView.adUnitID = bannerUnit.ads_id
         admobView.delegate = self
@@ -61,7 +62,7 @@ open class SMAdsBannerView : UIView {
         
         //Vungle mediation config
         let vungleExtras = VungleAdNetworkExtras()
-        vungleExtras.allPlacements = []
+        vungleExtras.allPlacements = ["AdmobMediatedBanner"]
         request.register(vungleExtras)
         
         self.addSubview(admobView)
