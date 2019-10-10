@@ -50,7 +50,7 @@ Pod::Spec.new do |s|
   s.ios.dependency 'MagicMapper'
   s.ios.dependency 'Google-Mobile-Ads-SDK'
   s.ios.dependency 'FBAudienceNetwork'
-#  s.ios.dependency 'PKHUD'
+  s.ios.dependency 'GoogleMobileAdsMediationFacebook'
   s.ios.dependency 'iProgressHUD'
 #  s.frameworks = [
 #    'Firebase'
