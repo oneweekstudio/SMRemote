@@ -54,12 +54,12 @@ open class SMAdsBannerView : UIView {
         
         let request = GADRequest()
         
-        //Facebook mediation
+        //Facebook mediation config
         let extras = GADFBNetworkExtras()
         extras.nativeAdFormat = .nativeBanner
         request.register(extras)
         
-        //Vungle mediation
+        //Vungle mediation config
         let vungleExtras = VungleAdNetworkExtras()
         vungleExtras.allPlacements = []
         request.register(vungleExtras)
