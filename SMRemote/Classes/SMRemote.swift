@@ -23,6 +23,7 @@ open class SMRemote : NSObject {
         return instance
     }()
     
+    //Load
     open func load( smConfig: SMConfig, completionHandler: (() -> Void)?) {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
