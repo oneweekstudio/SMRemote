@@ -189,3 +189,8 @@ Kết quả
 <img src="screenshot/step5.png" width = "30%", height = "auto" >
 <img src="screenshot/step6.png" width = "30%", height = "auto" >
 </p>
+
+
+Advance - Mediation ( Đang phát triển - Thử nghiệm  )
+====
+Đổi "network" trong mã json "quangcao" thành "mediation"

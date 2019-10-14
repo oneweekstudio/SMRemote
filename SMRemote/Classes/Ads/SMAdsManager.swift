@@ -196,16 +196,18 @@ open class SMAdsManager : NSObject {
             self.admob = GADInterstitial(adUnitID: self.quangcao.full.ads_id)
             let request = GADRequest()
             
-            
-            //Facebook mediation config
-            let extras = GADFBNetworkExtras()
-            extras.nativeAdFormat = .native
-            request.register(extras)
-            
-            //Vungle mediation config
-            let vungleExtras = VungleAdNetworkExtras()
-            vungleExtras.allPlacements = ["AdmobMediatedBanner"]
-            request.register(vungleExtras)
+            if self.quangcao.full.network == "mediation" {
+                
+                //Facebook mediation config
+                let extras = GADFBNetworkExtras()
+                extras.nativeAdFormat = .native
+                request.register(extras)
+                
+                //Vungle mediation config
+                let vungleExtras = VungleAdNetworkExtras()
+                vungleExtras.allPlacements = ["AdmobMediatedBanner"]
+                request.register(vungleExtras)
+            }
             
             self.admob.load(request)
             self.admob.delegate = self
@@ -374,17 +376,19 @@ extension SMAdsManager : GADRewardBasedVideoAdDelegate{
     private func requestReward() {
         if quangcao.reward.status == 1 {
             GADRewardBasedVideoAd.sharedInstance().delegate = self
-            
             let request = GADRequest()
-            //Facebook mediation config
-            let extras = GADFBNetworkExtras()
-            extras.nativeAdFormat = .native
-            request.register(extras)
             
-            //Vungle mediation config
-            let vungleExtras = VungleAdNetworkExtras()
-            vungleExtras.allPlacements = ["AdmobMediatedBanner"]
-            request.register(vungleExtras)
+            if quangcao.reward.network == "mediation" {
+                //Facebook mediation config
+                let extras = GADFBNetworkExtras()
+                extras.nativeAdFormat = .native
+                request.register(extras)
+                
+                //Vungle mediation config
+                let vungleExtras = VungleAdNetworkExtras()
+                vungleExtras.allPlacements = ["AdmobMediatedBanner"]
+                request.register(vungleExtras)
+            }
             
             GADRewardBasedVideoAd.sharedInstance().load( request,
                                                          withAdUnitID: quangcao.reward.ads_id)
