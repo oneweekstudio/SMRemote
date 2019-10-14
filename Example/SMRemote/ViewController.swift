@@ -12,6 +12,7 @@ import GoogleMobileAdsMediationTestSuite
 
 class ViewController: UIViewController {
     
+    
     @IBOutlet weak var bannerHeight: NSLayoutConstraint!
     @IBOutlet weak var bannerView: SMAdsBannerView!
 
@@ -37,6 +38,7 @@ class ViewController: UIViewController {
         SMAdsManager.shared.showFull(controller: self, start: #keyPath(Dev.default_start), loop: #keyPath(Dev.default_loop)) { (success) in
             print("Chuyển màn")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "B")
+            
             self.navigationController?.pushViewController(vc!, animated: true)
         }
     }
@@ -62,6 +64,7 @@ class ViewController: UIViewController {
     
     @IBAction func callTestSuite(_ sender: Any) {
         GoogleMobileAdsMediationTestSuite.present(on:self, delegate:nil)
+//        GoogleMobileAdsMediationTestSuite.present(withAppID: "ca-app-pub-8522828045267862~9280984686", on: self, delegate: nil)
     }
 }
 

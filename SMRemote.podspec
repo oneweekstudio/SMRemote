@@ -56,7 +56,6 @@ Pod::Spec.new do |s|
   s.ios.dependency 'GoogleMobileAdsMediationFacebook'
   s.ios.dependency 'GoogleMobileAdsMediationUnity'
   s.ios.dependency 'GoogleMobileAdsMediationVungle'
-  s.ios.dependency 'GoogleMobileAdsMediationTestSuite'
 #
 #  s.frameworks = [
 #    'Firebase'

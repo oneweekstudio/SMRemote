@@ -80,7 +80,7 @@ open class SMAdsBannerView : UIView {
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)
     }
-    
+ 
     private func loadFBAdView() {
         facebookView = UIDevice.current.userInterfaceIdiom == .phone ? FBAdView.init(placementID: bannerUnit.ads_id, adSize: kFBAdSizeHeight50Banner, rootViewController: rootViewController) : FBAdView.init(placementID: bannerUnit.ads_id, adSize: kFBAdSizeHeight90Banner, rootViewController: rootViewController)
         facebookView.delegate = self
@@ -123,6 +123,7 @@ extension SMAdsBannerView : GADBannerViewDelegate {
     }
     
     public func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName)")
         print("GADBannerView : didFailToReceiveAdWithError \(error.localizedDescription)")
         
     }
