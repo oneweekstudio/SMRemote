@@ -194,3 +194,7 @@ Kết quả
 Advance - Mediation ( Đang phát triển - Thử nghiệm  )
 ====
 Đổi "network" trong mã json "quangcao" thành "mediation"
+
+Đổi pod file thành branh dev
+
+pod 'SMRemote', :git => 'https://github.com/oneweekstudio/SMRemote.git', :branch => 'dev'
