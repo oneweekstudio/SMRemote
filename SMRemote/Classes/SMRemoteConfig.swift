@@ -6,7 +6,7 @@
 //
 
 import Foundation
-open class SMConfig : NSObject {
+open class SMRemoteConfig : NSObject {
     
     @objc open var ad_dialog_start = 1
     @objc open var ad_dialog_loop = 1

@@ -105,7 +105,7 @@ open class SMConfig : NSObject {
 - Tạo 1 class kế thừa từ thằng SMConfig kia theo demo.
 ````
 import Foundation
-open class Dev : SMConfig {
+open class Dev : SMRemoteConfig {
 
     @objc var custom_property = 1
     @objc var banner_home = 1
