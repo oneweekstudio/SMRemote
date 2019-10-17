@@ -164,7 +164,7 @@ open class SMAdsManager : NSObject {
                         completionHandler?(true)
                     }
                 }
-            } else if quangcao.full.network == "admob" {
+            } else if quangcao.full.network == "admob" || quangcao.full.network == "mediation" {
                 self.loadGADInterstitial(controller: controller) { (success) in
                     if success {
                         self.admob.present(fromRootViewController: controller)
