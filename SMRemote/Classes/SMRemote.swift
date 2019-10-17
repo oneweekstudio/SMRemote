@@ -24,7 +24,7 @@ open class SMRemote : NSObject {
     }()
     
     //Load
-    open func load( smConfig: SMConfig, completionHandler: (() -> Void)?) {
+    open func load( smConfig: SMRemoteConfig, completionHandler: (() -> Void)?) {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
@@ -38,7 +38,7 @@ open class SMRemote : NSObject {
         }
     }
     
-    private func setConfig(_ config : SMConfig) {
+    private func setConfig(_ config : SMRemoteConfig) {
 
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
             print("Quảng cáo : \(quangcao)")
