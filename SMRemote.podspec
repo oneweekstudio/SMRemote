@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SMRemote'
-  s.version          = '2.0.3'
+  s.version          = '2.0.4'
   s.summary          = 'Sản phẩm thuộc về ONEWEEK STUDIO'
   s.swift_versions   = '4.2'
 # This description is used to generate tags and improve search results.

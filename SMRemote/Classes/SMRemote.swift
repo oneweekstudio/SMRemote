@@ -24,14 +24,15 @@ open class SMRemote : NSObject {
     }()
     
     //Load
-    open func load( smConfig: SMRemoteConfig, completionHandler: (() -> Void)?) {
+    open func load( smConfig: SMRemoteConfig, completionHandler: ((Bool) -> Void)?) {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completionHandler: nil)
                 self.setConfig(smConfig)
-                completionHandler?()
+                completionHandler?(true)
             } else {
+                completionHandler?(false)
                 print("Config not fetched")
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
