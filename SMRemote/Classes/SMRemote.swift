@@ -71,5 +71,10 @@ open class SMRemote : NSObject {
         UserDefaults.standard.setValue(value, forKey: key)
         UserDefaults.standard.synchronize()
     }
+    
+    open func get(key: String) -> Int {
+        let value =  UserDefaults.standard.integer(forKey: key + adsPrefix)
+        return value
+    }
 
 }
