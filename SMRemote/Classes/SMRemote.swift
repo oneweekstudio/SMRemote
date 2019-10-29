@@ -10,12 +10,12 @@ import FirebaseRemoteConfig
 import GoogleMobileAds
 open class SMRemote : NSObject {
     
-//    static let prefix:String = "_counter"
+    //    static let prefix:String = "_counter"
     
     var remoteConfig = RemoteConfig.remoteConfig()
     var settings = RemoteConfigSettings()
     var expirationDuration = 3600
-
+    
     public static let sharedInstance : SMRemote = {
         let instance = SMRemote()
         instance.settings.minimumFetchInterval = 0
@@ -40,7 +40,7 @@ open class SMRemote : NSObject {
     }
     
     private func setConfig(_ config : SMRemoteConfig) {
-
+        
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
             print("Quảng cáo : \(quangcao)")
             SMAdsManager.shared.quangcao = AdsModel(quangcao)
@@ -55,10 +55,16 @@ open class SMRemote : NSObject {
                 self.set(key: key + adsPrefix, value: value)
                 if key == "ad_dialog_loop" {
                     print("Super: Không update counter của ad_dialog")
+                    if self.getCounter(key: key) == 0 {
+                        self.set(key: key + adsPrefixCounter, value: 1)
+                    }
                 } else if key == "ad_dialog_start" {
-                   print("Super: Không update counter của ad_dialog")
+                    print("Super: Không update counter của ad_dialog")
+                    if self.getCounter(key: key) == 0 {
+                        self.set(key: key + adsPrefixCounter, value: 1)
+                    }
                 } else {
-                     self.set(key: key + adsPrefixCounter, value: 1)
+                    self.set(key: key + adsPrefixCounter, value: 1)
                 }
             }
         }
@@ -82,5 +88,10 @@ open class SMRemote : NSObject {
         let value =  UserDefaults.standard.integer(forKey: key + adsPrefix)
         return value
     }
-
+    
+    open func getCounter(key: String) -> Int {
+        let value =  UserDefaults.standard.integer(forKey: key + adsPrefixCounter)
+        return value
+    }
+    
 }
