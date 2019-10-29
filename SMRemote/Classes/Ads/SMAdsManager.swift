@@ -113,7 +113,7 @@ open class SMAdsManager : NSObject {
             } else {
                 if startCounter > startConfig {
                     self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
-                    if loopCounter - 1 == loopConfig  {
+                    if loopCounter == loopConfig  {
                         self.resetCounter(key: loop + adsPrefixCounter)
                         //Show ads
                         self.requestAds(controller: controller, quangcao: self.quangcao) { (success) in
@@ -165,7 +165,7 @@ open class SMAdsManager : NSObject {
         } else {
             if startCounter > startConfig {
                 self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
-                if loopCounter - 1 == loopConfig  {
+                if loopCounter == loopConfig  {
                     self.resetCounter(key: loop + adsPrefixCounter)
                     completionHandler?(false)
                 } else {
