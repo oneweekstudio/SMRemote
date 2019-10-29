@@ -28,9 +28,10 @@ class ViewController: UIViewController {
     }
     
     func loadConfig() {
-        SMRemote.sharedInstance.load(smConfig: Dev()) {
+        SMRemote.sharedInstance.load(smConfig: Dev()) { success in
             print("Tải thành công config từ remote")
         }
+        
     }
     
     @IBAction func showAdsFull(_ sender: Any) {

@@ -136,6 +136,46 @@ open class SMAdsManager : NSObject {
         }
     }
     
+    //Tùy chình hiện quảng cáo
+    open func show( controller: UIViewController,  start: String ,  loop : String , completionHandler : ((Bool) -> Void)?) {
+        
+        self.controller = controller
+        
+        let userDefault = UserDefaults.standard
+        let startConfig = userDefault.integer(forKey: start + adsPrefix)
+        let loopConfig = userDefault.integer(forKey: loop + adsPrefix)
+        
+        let startCounter = userDefault.integer(forKey: start + adsPrefixCounter)
+        let loopCounter = userDefault.integer(forKey: loop + adsPrefixCounter)
+        
+        self.plusCounter(key: start + adsPrefixCounter, value: startCounter)
+        
+        print("\(start + adsPrefix) \(startConfig) \(loop +  adsPrefix) \(loopConfig) ")
+        print("\(start + adsPrefixCounter) \(startCounter) \(loop +  adsPrefixCounter) \(loopCounter) ")
+        
+        if startConfig == 0 && loopConfig == 0 {
+            completionHandler?(true)
+        } else {
+            if startCounter > startConfig {
+                self.plusCounter(key: loop + adsPrefixCounter, value: loopCounter)
+                if loopCounter - 1 == loopConfig  {
+                    self.resetCounter(key: loop + adsPrefixCounter)
+                    completionHandler?(false)
+                } else {
+                    completionHandler?(true)
+                }
+            } else {
+                if startCounter == startConfig {
+                    completionHandler?(false)
+                } else {
+                    completionHandler?(true)
+                }
+            }
+        }
+    }
+    
+    
+    
     /// Chuyển các counter về 1
     ///
     /// - Parameter key: Là 1  key của thằng Userdefault
@@ -338,8 +378,6 @@ extension SMAdsManager {
                 height.constant = 0
             }
         }
-        
-        
         
         bannerView.updateConstraints()
         controller.view.layoutSubviews()
