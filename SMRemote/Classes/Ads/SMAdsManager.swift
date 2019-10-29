@@ -152,8 +152,8 @@ open class SMAdsManager : NSObject {
         let startConfig = userDefault.integer(forKey: start + adsPrefix)
         let loopConfig = userDefault.integer(forKey: loop + adsPrefix)
         
-        let startCounter = userDefault.integer(forKey: start + adsPrefixCounter) + 1
-        let loopCounter = userDefault.integer(forKey: loop + adsPrefixCounter) + 1
+        let startCounter = userDefault.integer(forKey: start + adsPrefixCounter)
+        let loopCounter = userDefault.integer(forKey: loop + adsPrefixCounter)
         
         self.plusCounter(key: start + adsPrefixCounter, value: startCounter)
         
