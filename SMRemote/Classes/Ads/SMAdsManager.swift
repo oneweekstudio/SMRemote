@@ -137,6 +137,13 @@ open class SMAdsManager : NSObject {
     }
     
     //Tùy chình hiện quảng cáo
+    
+    
+    /// Tùy chỉnh hiện quảng cáo 
+    /// - Parameter controller: controller cần show dialog
+    /// - Parameter start: thường thì là ad_dialog_start
+    /// - Parameter loop: thường thì là ad_dialog_loop
+    /// - Parameter completionHandler: Khi không hiện quảng cáo check completionHadnler (true ),  hiện quảng cáo là completionHandler(false)
     open func show( controller: UIViewController,  start: String ,  loop : String , completionHandler : ((Bool) -> Void)?) {
         
         self.controller = controller
