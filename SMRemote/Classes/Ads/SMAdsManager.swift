@@ -139,7 +139,7 @@ open class SMAdsManager : NSObject {
     //Tùy chình hiện quảng cáo
     
     
-    /// Tùy chỉnh hiện quảng cáo 
+    /// Tùy chỉnh hiện quảng cáo
     /// - Parameter controller: controller cần show dialog
     /// - Parameter start: thường thì là ad_dialog_start
     /// - Parameter loop: thường thì là ad_dialog_loop

@@ -53,10 +53,12 @@ open class SMRemote : NSObject {
                 guard let value = remoteConfig[key].numberValue as? Int else { return }
                 print("Super: nhận về key \(key) value \(value)")
                 self.set(key: key + adsPrefix, value: value)
-                if key != "ad_dialog_loop" || key != "ad_dialog_start" {
-                    self.set(key: key + adsPrefixCounter, value: 1)
-                } else {
+                if key == "ad_dialog_loop" {
                     print("Super: Không update counter của ad_dialog")
+                } else if key == "ad_dialog_start" {
+                   print("Super: Không update counter của ad_dialog")
+                } else {
+                     self.set(key: key + adsPrefixCounter, value: 1)
                 }
             }
         }
