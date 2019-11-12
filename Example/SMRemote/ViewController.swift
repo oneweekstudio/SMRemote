@@ -28,8 +28,14 @@ class ViewController: UIViewController {
     }
     
     func loadConfig() {
-        SMRemote.sharedInstance.load(smConfig: Dev()) { success in
-            print("Tải thành công config từ remote")
+        //deprecated
+//        SMRemote.sharedInstance.load(smConfig: Dev()) { success in
+//            print("Tải thành công config từ remote")
+//        }
+        
+        SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson) in
+            guard let json = optionalJson else { return }
+            print(json)
         }
         
     }
@@ -73,6 +79,11 @@ class ViewController: UIViewController {
 //Tạo 1 class kế thừa từ SMConfig
 open class Dev : SMRemoteConfig {
     
-    @objc var custom_property = 1
-    @objc var banner_home = 1
+//    @deprecated
+//    @objc var custom_property = 1
+//    @objc var banner_home = 1
+    
+    @objc var home_click_full_start = 0
+    @objc var home_click_full_loop = 0
+    @objc var banner_home = 0
 }

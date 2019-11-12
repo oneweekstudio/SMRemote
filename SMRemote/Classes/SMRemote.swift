@@ -24,6 +24,7 @@ open class SMRemote : NSObject {
     }()
     
     //Load
+    @available(*, deprecated, renamed: "loadConfig")
     open func load( smConfig: SMRemoteConfig, completionHandler: ((Bool) -> Void)?) {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
@@ -39,6 +40,24 @@ open class SMRemote : NSObject {
         }
     }
     
+    open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((Any?) -> Void)?) {
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate(completionHandler: nil)
+                self.setToolConfig(smConfig) { (json) in
+                    completionHandler?(json)
+                }
+                completionHandler?(nil)
+            } else {
+                completionHandler?(nil)
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+        }
+    }
+    
+    @available(*, deprecated, renamed: "setToolConfig")
     private func setConfig(_ config : SMRemoteConfig) {
         
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
@@ -77,6 +96,55 @@ open class SMRemote : NSObject {
             self.set(key: key + adsPrefixCounter, value: 1)
         }
         
+    }
+    
+    
+    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (Any) -> Void) {
+        
+        if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
+            print("Quảng cáo :\n \(quangcao)")
+            SMAdsManager.shared.quangcao = AdsModel(quangcao)
+        }
+        print("JSON key Config:")
+        print(remoteConfig["tools"].jsonValue ?? "None")
+        guard let json = remoteConfig["tools"].jsonValue as? [String:Any] else {return }
+        
+        let mirror = Mirror.init(reflecting: config)
+        if let mirror_super = mirror.superclassMirror {
+            for i in mirror_super.children {
+                guard let key = i.label else { return }
+                if let value = json[key] as? Int {
+                    print("Super: nhận về key \(key) value \(value)")
+                    self.set(key: key + adsPrefix, value: value)
+                    if key == "ad_dialog_loop" {
+                        print("Super: Không update counter của ad_dialog")
+                        if self.getCounter(key: key) == 0 {
+                            self.set(key: key + adsPrefixCounter, value: 1)
+                        }
+                    } else if key == "ad_dialog_start" {
+                        print("Super: Không update counter của ad_dialog")
+                        if self.getCounter(key: key) == 0 {
+                            self.set(key: key + adsPrefixCounter, value: 1)
+                        }
+                    } else {
+                        print("Super set key : \(key)")
+                        self.set(key: key + adsPrefixCounter, value: 1)
+                    }
+                } else {
+                    print("Không nhận giá trị của key \(key)")
+                }
+            }
+        }
+        
+        for i in mirror.children {
+            guard let key = i.label else { return }
+            guard let value = json[key] as? Int else { return }
+            print("Child: nhận về key \(key) value \(value)")
+            self.set(key: key + adsPrefix, value: value)
+            self.set(key: key + adsPrefixCounter, value: 1)
+        }
+        
+        completionHandler(json)
     }
     
     fileprivate func set(key:String, value: Any) {
