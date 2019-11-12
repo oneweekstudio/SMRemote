@@ -7,7 +7,7 @@ Bước 1: FIREBASE
 ````
   quangcao
   tools
-
+````
 - Mình có thể thêm các config khác (AM quy định). Với các value theo họ yêu cầu
 ````
 dong_dep_trai
