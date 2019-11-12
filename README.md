@@ -6,10 +6,8 @@ Bước 1: FIREBASE
 > Config key mặc định trong thằng FIREBASE:
 ````
   quangcao
-  more_tool
-  ad_dialog_loop
-  ad_dialog_start
-````
+  tools
+
 - Mình có thể thêm các config khác (AM quy định). Với các value theo họ yêu cầu
 ````
 dong_dep_trai
@@ -93,12 +91,6 @@ Bước 2: PROJECT
 import Foundation
 open class SMConfig : NSObject {
 
-    @objc open var ad_dialog_start = 1
-    @objc open var ad_dialog_loop = 1
-    @objc open var more_tool = 1
-
-    @objc open var default_start = 1
-    @objc open var default_loop = 2
 
 }
 ````
@@ -138,11 +130,18 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 > Mình cần load config: Thường thì mình sẽ gọi ở splash fake
 ````
+//Không dùng nữa
 func loadConfig() {
        SMRemote.sharedInstance.load(smConfig: Dev()) {
            print("Tải thành công config từ remote")
        }
    }
+   
+   //Dùng cái này
+   SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson) in
+              guard let json = optionalJson else { return }
+              print(json)
+          }
 ````
 
 
