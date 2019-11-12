@@ -107,42 +107,47 @@ open class SMRemote : NSObject {
         }
         print("JSON key Config:")
         print(remoteConfig["tools"].jsonValue ?? "None")
-        guard let json = remoteConfig["tools"].jsonValue as? [String:Any] else {return }
+        guard let json = remoteConfig["tools"].jsonValue as? [String:Any] else {
+            completionHandler([:])
+            return }
         
         let mirror = Mirror.init(reflecting: config)
         if let mirror_super = mirror.superclassMirror {
             for i in mirror_super.children {
-                guard let key = i.label else { return }
-                if let value = json[key] as? Int {
-                    print("Super: nhận về key \(key) value \(value)")
-                    self.set(key: key + adsPrefix, value: value)
-                    if key == "ad_dialog_loop" {
-                        print("Super: Không update counter của ad_dialog")
-                        if self.getCounter(key: key) == 0 {
-                            self.set(key: key + adsPrefixCounter, value: 1)
-                        }
-                    } else if key == "ad_dialog_start" {
-                        print("Super: Không update counter của ad_dialog")
-                        if self.getCounter(key: key) == 0 {
+                if let key = i.label {
+                    if let value = json[key] as? Int {
+                        print("Super: nhận về key \(key) value \(value)")
+                        self.set(key: key + adsPrefix, value: value)
+                        if key == "ad_dialog_loop" {
+                            print("Super: Không update counter của ad_dialog")
+                            if self.getCounter(key: key) == 0 {
+                                self.set(key: key + adsPrefixCounter, value: 1)
+                            }
+                        } else if key == "ad_dialog_start" {
+                            print("Super: Không update counter của ad_dialog")
+                            if self.getCounter(key: key) == 0 {
+                                self.set(key: key + adsPrefixCounter, value: 1)
+                            }
+                        } else {
+                            print("Super set key : \(key)")
                             self.set(key: key + adsPrefixCounter, value: 1)
                         }
                     } else {
-                        print("Super set key : \(key)")
-                        self.set(key: key + adsPrefixCounter, value: 1)
-                    }
-                } else {
-                    print("Không nhận giá trị của key \(key)")
-                }
-            }
-        }
+                        print("Không nhận giá trị của key \(key)")
+                    } //End if
+                } //End if
+            } // End for
+        } //End if
         
         for i in mirror.children {
-            guard let key = i.label else { return }
-            guard let value = json[key] as? Int else { return }
-            print("Child: nhận về key \(key) value \(value)")
-            self.set(key: key + adsPrefix, value: value)
-            self.set(key: key + adsPrefixCounter, value: 1)
-        }
+            if let key = i.label {
+                if let value = json[key] as? Int {
+                    print("Child: nhận về key \(key) value \(value)")
+                    self.set(key: key + adsPrefix, value: value)
+                    self.set(key: key + adsPrefixCounter, value: 1)
+                } //End if
+            } //End if
+        } //End for
         
         completionHandler(json)
     }
