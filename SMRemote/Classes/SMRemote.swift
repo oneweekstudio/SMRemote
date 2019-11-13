@@ -40,22 +40,23 @@ open class SMRemote : NSObject {
         }
     }
     
-    open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((Any?) -> Void)?) {
+    open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((Any?, Any?) -> Void)?) {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completionHandler: nil)
-                self.setToolConfig(smConfig) { (json) in
-                    completionHandler?(json)
+                self.setToolConfig(smConfig) { (json, qc)  in
+                    completionHandler?(json, qc)
                 }
-                completionHandler?(nil)
+                completionHandler?(nil, nil)
             } else {
-                completionHandler?(nil)
+                completionHandler?(nil, nil)
                 print("Config not fetched")
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
             }
         }
     }
+    
     
     @available(*, deprecated, renamed: "setToolConfig")
     private func setConfig(_ config : SMRemoteConfig) {
@@ -99,16 +100,18 @@ open class SMRemote : NSObject {
     }
     
     
-    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (Any) -> Void) {
-        
+    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (_ config :Any,_ quangcao: Any) -> Void) {
+        var qc: AdsModel = AdsModel()
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
             print("Quảng cáo :\n \(quangcao)")
             SMAdsManager.shared.quangcao = AdsModel(quangcao)
+            qc = AdsModel(quangcao)
         }
+        
         print("JSON key Config:")
         print(remoteConfig["tools"].jsonValue ?? "None")
         guard let json = remoteConfig["tools"].jsonValue as? [String:Any] else {
-            completionHandler([:])
+            completionHandler([:], qc)
             return }
         
         let mirror = Mirror.init(reflecting: config)
@@ -149,7 +152,7 @@ open class SMRemote : NSObject {
             } //End if
         } //End for
         
-        completionHandler(json)
+        completionHandler(json, qc)
     }
     
     fileprivate func set(key:String, value: Any) {

@@ -33,7 +33,7 @@ class ViewController: UIViewController {
 //            print("Tải thành công config từ remote")
 //        }
         
-        SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson) in
+        SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson, quangcao) in
             guard let json = optionalJson else { return }
             print(json)
         }
