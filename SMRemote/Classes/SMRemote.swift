@@ -100,12 +100,12 @@ open class SMRemote : NSObject {
     }
     
     
-    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (_ config :Any,_ quangcao: Any) -> Void) {
-        var qc: AdsModel = AdsModel()
+    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (_ config :Any,_ quangcao: Any?) -> Void) {
+        var qc: Any?
         if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String: Any]{
             print("Quảng cáo :\n \(quangcao)")
             SMAdsManager.shared.quangcao = AdsModel(quangcao)
-            qc = AdsModel(quangcao)
+            qc = quangcao
         }
         
         print("JSON key Config:")
