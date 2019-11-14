@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import GoogleMobileAds
-
+import SMRemote
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize the Google Mobile Ads SDK.
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        
+//        SMAdsManager.shared.
         return true
     }
     

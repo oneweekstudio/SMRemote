@@ -56,6 +56,10 @@ open class SMAdsManager : NSObject {
     fileprivate var rewardDidWatch : (() -> Void)?
     fileprivate var rewardDidClose : (() -> Void)?
     
+    open func config(enableDebug: Bool) {
+        SMAdsManager.shared.isDebug = enableDebug
+    }
+    
     open func showLoading(vc: UIViewController) {
         DispatchQueue.main.async {
             let iprogress: iProgressHUD = iProgressHUD()
