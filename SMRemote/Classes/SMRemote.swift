@@ -20,6 +20,11 @@ open class SMRemote : NSObject {
         let instance = SMRemote()
         instance.settings.minimumFetchInterval = 0
         instance.remoteConfig.configSettings = instance.settings
+        
+        if SMAdsManager.shared.isDebug {
+            instance.expirationDuration = 0
+        }
+        
         return instance
     }()
     
@@ -121,20 +126,8 @@ open class SMRemote : NSObject {
                     if let value = json[key] as? Int {
                         print("Super: nhận về key \(key) value \(value)")
                         self.set(key: key + adsPrefix, value: value)
-                        if key == "ad_dialog_loop" {
-                            print("Super: Không update counter của ad_dialog")
-                            if self.getCounter(key: key) == 0 {
-                                self.set(key: key + adsPrefixCounter, value: 1)
-                            }
-                        } else if key == "ad_dialog_start" {
-                            print("Super: Không update counter của ad_dialog")
-                            if self.getCounter(key: key) == 0 {
-                                self.set(key: key + adsPrefixCounter, value: 1)
-                            }
-                        } else {
-                            print("Super set key : \(key)")
-                            self.set(key: key + adsPrefixCounter, value: 1)
-                        }
+                        print("Super set counterKey : \(key)")
+                        self.set(key: key + adsPrefixCounter, value: 1)
                     } else {
                         print("Không nhận giá trị của key \(key)")
                     } //End if
@@ -147,7 +140,20 @@ open class SMRemote : NSObject {
                 if let value = json[key] as? Int {
                     print("Child: nhận về key \(key) value \(value)")
                     self.set(key: key + adsPrefix, value: value)
-                    self.set(key: key + adsPrefixCounter, value: 1)
+                    if key == "ad_dialog_loop" {
+                        print("Super: Không update counter của ad_dialog: hiện tại = \(self.getCounter(key: key))")
+                        if self.getCounter(key: key) == 0 {
+                            self.set(key: key + adsPrefixCounter, value: 1)
+                        }
+                    } else if key == "ad_dialog_start" {
+                        print("Super: Không update counter của ad_dialog: hiện tại = \(self.getCounter(key: key))")
+                        if self.getCounter(key: key) == 0 {
+                            self.set(key: key + adsPrefixCounter, value: 1)
+                        }
+                    } else {
+                        print("Chill set counterKey : \(key)")
+                        self.set(key: key + adsPrefixCounter, value: 1)
+                    }
                 } //End if
             } //End if
         } //End for
