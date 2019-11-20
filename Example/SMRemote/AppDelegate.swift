@@ -25,7 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize the Google Mobile Ads SDK.
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
+        //Khong dung ham nay nua
         SMAdsManager.shared.config(enableDebug: true)
+        
+        //Su dung ham nay
+        SMRemote.sharedInstance.enableDebug(true)
         
         return true
     }

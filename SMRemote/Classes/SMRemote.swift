@@ -11,6 +11,7 @@ import GoogleMobileAds
 open class SMRemote : NSObject {
     
     //    static let prefix:String = "_counter"
+    public var isDebug: Bool = false
     
     var remoteConfig = RemoteConfig.remoteConfig()
     var settings = RemoteConfigSettings()
@@ -21,12 +22,16 @@ open class SMRemote : NSObject {
         instance.settings.minimumFetchInterval = 0
         instance.remoteConfig.configSettings = instance.settings
         
-        if SMAdsManager.shared.isDebug {
+        if SMRemote.sharedInstance.isDebug {
             instance.expirationDuration = 0
         }
         
         return instance
     }()
+    
+    public func enableDebug(_ isDebug: Bool = false) {
+        SMRemote.sharedInstance.isDebug = isDebug
+    }
     
     //Load
     @available(*, deprecated, renamed: "loadConfig")

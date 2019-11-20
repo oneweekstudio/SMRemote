@@ -46,6 +46,7 @@ open class SMAdsManager : NSObject {
     fileprivate var controller: UIViewController?
     fileprivate var rewardController: UIViewController?
     
+    @available(*, deprecated)
     var isDebug:Bool = false
     
     /// Khi quảng cáo thực thi xong ( true hay fail ) nó sẽ sử dụng hàm này
@@ -56,6 +57,7 @@ open class SMAdsManager : NSObject {
     fileprivate var rewardDidWatch : (() -> Void)?
     fileprivate var rewardDidClose : (() -> Void)?
     
+    @available(*, deprecated)
     open func config(enableDebug: Bool) {
         SMAdsManager.shared.isDebug = enableDebug
     }
@@ -262,9 +264,9 @@ open class SMAdsManager : NSObject {
             
             self.admob.load(request)
             self.admob.delegate = self
-            if self.isDebug {
+            if SMRemote.sharedInstance.isDebug {
                 print("DEBUG ENABLE : kGADSimulatorID  \(kGADSimulatorID)")
-                //request.testDevices = [kGADSimulatorID]
+//                request.testDevices = [(kGADSimulatorID as! String)]
             }
         }
     }
@@ -285,7 +287,7 @@ open class SMAdsManager : NSObject {
             self.facebook = FBInterstitialAd.init(placementID: self.quangcao.full.ads_id)
             self.facebook.delegate = self
             self.facebook.load()
-            if self.isDebug {
+            if SMRemote.sharedInstance.isDebug {
                 print("DEBUG ENABLE : TEST_DEVICES_HASH  \(FBAdSettings.testDeviceHash())")
                 FBAdSettings.setLogLevel(FBAdLogLevel.log)
                 FBAdSettings.addTestDevice(FBAdSettings.testDeviceHash())
