@@ -22,9 +22,9 @@ open class SMRemote : NSObject {
         instance.settings.minimumFetchInterval = 0
         instance.remoteConfig.configSettings = instance.settings
         
-        if SMRemote.sharedInstance.isDebug {
-            instance.expirationDuration = 0
-        }
+//        if SMRemote.sharedInstance.isDebug {
+//            instance.expirationDuration = 0
+//        }
         
         return instance
     }()
@@ -51,7 +51,8 @@ open class SMRemote : NSObject {
     }
     
     open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((Any?, Any?) -> Void)?) {
-        remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
+        let _expirationDuration = SMRemote.sharedInstance.isDebug ? 0 : 3600
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(_expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completionHandler: nil)
