@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     @IBAction func showAdsFull(_ sender: Any) {
         //Gọi full với start loop
-        SMAdsManager.shared.showFull(controller: self, start: #keyPath(Dev.default_start), loop: #keyPath(Dev.default_loop)) { (success) in
+        SMAdsManager.shared.showFull(controller: self, start: #keyPath(Dev.home_click_full_start), loop: #keyPath(Dev.home_click_full_loop)) { (success) in
             print("Chuyển màn")
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "B")
             
@@ -85,5 +85,5 @@ open class Dev : SMRemoteConfig {
     
     @objc var home_click_full_start = 0
     @objc var home_click_full_loop = 0
-    @objc var banner_home = 0
+    @objc var banner_home = 5
 }

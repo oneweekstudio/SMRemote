@@ -15,7 +15,7 @@ open class SMRemote : NSObject {
     
     var remoteConfig = RemoteConfig.remoteConfig()
     var settings = RemoteConfigSettings()
-    var expirationDuration = 3600
+    var expirationDuration = 0
     
     public static let sharedInstance : SMRemote = {
         let instance = SMRemote()
