@@ -377,7 +377,7 @@ extension SMAdsManager {
         
         if object > 0 {
             height.constant = 0
-            bannerView.removeFromSuperview()
+            bannerView.isHidden = true
         } else {
             
             let bannerUnit = SMAdsManager.shared.quangcao.banner
@@ -390,7 +390,7 @@ extension SMAdsManager {
                 height.constant = SMAdsBannerView.bannerHeight
             } else {
                 height.constant = 0
-                bannerView.removeFromSuperview()
+                bannerView.isHidden = true
             }
         }
         
