@@ -21,13 +21,9 @@ open class SMAdsBannerView : UIView {
     
     var rootViewController: UIViewController!
     
-    var bannerUnit: AdsUnit! {
-        didSet {
-            self.initAds()
-        }
-    }
+    var bannerUnit: AdsUnit!
     
-    private func initAds() {
+    func initAds() {
         self.backgroundColor = UIColor.clear
         if bannerUnit.status == 1 {
             

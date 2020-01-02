@@ -381,13 +381,18 @@ extension SMAdsManager {
         } else {
             
             let bannerUnit = SMAdsManager.shared.quangcao.banner
-            
-            bannerView.rootViewController = controller
-            
-            bannerView.bannerUnit = bannerUnit
-            
+
             if enableBannerAds(keyConfig: keyConfig) && bannerUnit.status == 1{
+                
                 height.constant = SMAdsBannerView.bannerHeight
+                
+                bannerView.rootViewController = controller
+                
+                bannerView.bannerUnit = bannerUnit
+                
+                //Load ads
+                bannerView.initAds()
+                
             } else {
                 height.constant = 0
                 bannerView.isHidden = true
