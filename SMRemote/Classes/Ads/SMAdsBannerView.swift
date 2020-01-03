@@ -25,6 +25,7 @@ open class SMAdsBannerView : UIView {
     
     func initAds() {
         self.backgroundColor = UIColor.clear
+        self.removeBannerView()
         if bannerUnit.status == 1 {
             
             switch bannerUnit.network {
@@ -50,7 +51,7 @@ open class SMAdsBannerView : UIView {
         admobView.rootViewController = rootViewController
         
         let request = GADRequest()
-
+        
         //Facebook mediation config
         let extras = GADFBNetworkExtras()
         extras.nativeAdFormat = .nativeBanner
@@ -60,7 +61,7 @@ open class SMAdsBannerView : UIView {
         let vungleExtras = VungleAdNetworkExtras()
         vungleExtras.allPlacements = ["AdmobMediatedBanner"]
         request.register(vungleExtras)
-                
+        
         self.addSubview(admobView)
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)
@@ -76,7 +77,7 @@ open class SMAdsBannerView : UIView {
         admobView.load(request)
         self.addConstraintAdsView(ads: admobView)
     }
- 
+    
     private func loadFBAdView() {
         facebookView = UIDevice.current.userInterfaceIdiom == .phone ? FBAdView.init(placementID: bannerUnit.ads_id, adSize: kFBAdSizeHeight50Banner, rootViewController: rootViewController) : FBAdView.init(placementID: bannerUnit.ads_id, adSize: kFBAdSizeHeight90Banner, rootViewController: rootViewController)
         facebookView.delegate = self
@@ -105,6 +106,18 @@ open class SMAdsBannerView : UIView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+    }
+    
+    //Khi người dùng không cho hiện banner view
+   open func removeBannerView() {
+    
+        if admobView != nil {
+            admobView.removeFromSuperview()
+        }
+        
+        if facebookView != nil {
+            facebookView.removeFromSuperview()
+        }
     }
     
 }
