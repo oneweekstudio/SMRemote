@@ -10,7 +10,6 @@ import FirebaseRemoteConfig
 import GoogleMobileAds
 open class SMRemote : NSObject {
     
-    //    static let prefix:String = "_counter"
     public var isDebug: Bool = false
     
     var remoteConfig = RemoteConfig.remoteConfig()
@@ -21,11 +20,6 @@ open class SMRemote : NSObject {
         let instance = SMRemote()
         instance.settings.minimumFetchInterval = 0
         instance.remoteConfig.configSettings = instance.settings
-        
-//        if SMRemote.sharedInstance.isDebug {
-//            instance.expirationDuration = 0
-//        }
-        
         return instance
     }()
     
@@ -50,6 +44,7 @@ open class SMRemote : NSObject {
         }
     }
     
+    //Phục vụ cho ae thích tự custom keyvalue
     open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((Any?, Any?) -> Void)?) {
         let _expirationDuration = SMRemote.sharedInstance.isDebug ? 0 : 3600
         remoteConfig.fetch(withExpirationDuration: TimeInterval(_expirationDuration)) { (status, error) -> Void in
@@ -59,7 +54,6 @@ open class SMRemote : NSObject {
                 self.setToolConfig(smConfig) { (json, qc)  in
                     completionHandler?(json, qc)
                 }
-                completionHandler?(nil, nil)
             } else {
                 completionHandler?(nil, nil)
                 print("Config not fetched")
