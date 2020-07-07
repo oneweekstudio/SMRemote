@@ -376,6 +376,7 @@ extension SMAdsManager {
         let object = userDefault.bool(forKey: "purchase")
         
         if object {
+            print("User purchased")
             height.constant = 0
             bannerView.isHidden = true
             bannerView.removeBannerView()
@@ -384,7 +385,7 @@ extension SMAdsManager {
             let bannerUnit = SMAdsManager.shared.quangcao.banner
 
             if enableBannerAds(keyConfig: keyConfig) && bannerUnit.status == 1{
-                
+                print("SMAdsManager: Show banner!")
                 height.constant = SMAdsBannerView.bannerHeight
                 
                 bannerView.rootViewController = controller
@@ -395,6 +396,7 @@ extension SMAdsManager {
                 bannerView.initAds()
                 
             } else {
+                print("SMAdsManager: Hide banner!")
                 height.constant = 0
                 bannerView.isHidden = true
                 bannerView.removeBannerView()

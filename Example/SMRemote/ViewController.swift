@@ -52,7 +52,10 @@ class ViewController: UIViewController {
     
     @IBAction func showBannerAds(_ sender: Any) {
         //Hàm gọi quảng cáo
-        SMAdsManager.shared.showBannerAds(present: self, bannerView: self.bannerView, bannerHeight: self.bannerHeight, keyConfig: #keyPath(Dev.banner_home))
+        SMAdsManager.shared.showBannerAds(present: self,
+                                          bannerView: self.bannerView,
+                                          bannerHeight: self.bannerHeight,
+                                          keyConfig: #keyPath(Dev.banner_home))
     }
 
     
