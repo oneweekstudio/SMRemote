@@ -99,8 +99,8 @@ open class SMAdsManager : NSObject {
         self.controller = controller
         
         let userDefault = UserDefaults.standard
-        let object = userDefault.integer(forKey: "purchase")
-        if object > 0 {
+        let object = userDefault.bool(forKey: "purchase")
+        if object {
             completionHandler?(true)
         } else {
             let startConfig = userDefault.integer(forKey: start + adsPrefix)
@@ -373,9 +373,9 @@ extension SMAdsManager {
     open func showBannerAds( present controller: UIViewController, bannerView: SMAdsBannerView, bannerHeight height : NSLayoutConstraint, keyConfig: String) {
         
         let userDefault = UserDefaults.standard
-        let object = userDefault.integer(forKey: "purchase")
+        let object = userDefault.bool(forKey: "purchase")
         
-        if object > 0 {
+        if object {
             height.constant = 0
             bannerView.isHidden = true
             bannerView.removeBannerView()
