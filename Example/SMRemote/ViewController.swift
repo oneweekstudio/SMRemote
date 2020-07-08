@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 //        print(SMAds)
         SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson, quangcao) in
             guard let json = optionalJson else { return }
-            print(json)
+            //print(json)
         }
         
     }
