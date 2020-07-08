@@ -96,7 +96,7 @@ open class SMRemote : NSObject {
                         self.set(key: key + adsPrefixCounter, value: 1)
                     }
                 } else {
-                    print("- Error: Can not set [KEY] \(key)")
+                    print("- Error: Can not set [KEY] \(key) \(type(of: json[key]))")
                 } //End if
             } //End if
         } //End for
