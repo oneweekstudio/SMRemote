@@ -60,6 +60,7 @@ open class SMRemote : NSObject {
             return }
         
         let mirror = Mirror.init(reflecting: config)
+        
         if let mirror_super = mirror.superclassMirror {
             for i in mirror_super.children {
                 if let key = i.label {
@@ -94,6 +95,8 @@ open class SMRemote : NSObject {
                         //print("- Child: [SET] counterKey : \(key)")
                         self.set(key: key + adsPrefixCounter, value: 1)
                     }
+                } else {
+                    print("- Error: Can not set [KEY] \(key)")
                 } //End if
             } //End if
         } //End for
