@@ -1,6 +1,6 @@
 {
   "name": "SMRemote",
-  "version": "1.0.2",
+  "version": "3.0.7",
   "summary": "Sản phẩm thuộc về ONEWEEK STUDIO",
   "swift_versions": "4.2",
   "description": "TODO: Add long description of the pod here. Add long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here",
@@ -14,7 +14,7 @@
   },
   "source": {
     "git": "https://github.com/oneweekstudio/SMRemote.git",
-    "tag": "1.0.2"
+    "tag": "3.0.7"
   },
   "platforms": {
     "ios": "9.3"
@@ -36,7 +36,7 @@
       "MagicMapper": [
 
       ],
-      "iProgressHUD": [
+      "JGProgressHUD": [
 
       ],
       "Google-Mobile-Ads-SDK": [

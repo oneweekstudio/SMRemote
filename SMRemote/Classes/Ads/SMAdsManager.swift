@@ -8,7 +8,7 @@
 import Foundation
 import GoogleMobileAds
 import FBAudienceNetwork
-import iProgressHUD
+import JGProgressHUD
 
 import FacebookAdapter
 import VungleAdapter
@@ -57,6 +57,8 @@ open class SMAdsManager : NSObject {
     fileprivate var rewardDidWatch : (() -> Void)?
     fileprivate var rewardDidClose : (() -> Void)?
     
+    let hudSMAds = JGProgressHUD(style: .dark)
+    
     @available(*, deprecated)
     open func config(enableDebug: Bool) {
         SMAdsManager.shared.isDebug = enableDebug
@@ -64,26 +66,14 @@ open class SMAdsManager : NSObject {
     
     open func showLoading(vc: UIViewController) {
         DispatchQueue.main.async {
-            let iprogress: iProgressHUD = iProgressHUD()
-            iprogress.iprogressStyle = .vertical
-            iprogress.indicatorStyle = .ballPulse
-            iprogress.isShowModal = true
-            iprogress.isShowCaption = true
-            iprogress.modalColor = .black
-            iprogress.boxSize = 30
-            //            iprogress.indicatorSize = 50
-            iprogress.captionSize = 14
-            iprogress.attachProgress(toViews: vc.view)
-            vc.view.updateCaption(text: "Loading Ads")
-            
-            vc.view.showProgress()
+            self.hudSMAds.textLabel.text = "Loading"
+            self.hudSMAds.show(in: vc.view)
         }
     }
     
     open func hideLoading(vc: UIViewController?) {
         DispatchQueue.main.async {
-            guard let vc = vc else { return }
-            vc.view.dismissProgress()
+            self.hudSMAds.dismiss(afterDelay: 1.5, animated: true)
         }
     }
     
