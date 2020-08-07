@@ -105,7 +105,7 @@ open class SMRemote : NSObject {
     }
     
     open func getRemoteValue( ByParameterKey key: String, completionHandler: @escaping (Any?) -> Void) -> Void {
-        completionHandler(self.remoteConfig[key].jsonValue)
+        completionHandler(self.remoteConfig[key])
     }
     
     fileprivate func set(key:String, value: Any) {
