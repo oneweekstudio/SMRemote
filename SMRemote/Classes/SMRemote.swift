@@ -104,6 +104,10 @@ open class SMRemote : NSObject {
         completionHandler(json, qc)
     }
     
+    func getRemoteValue( ByParameterKey key: String, completionHandler: @escaping (Any?) -> Void) -> Void {
+        completionHandler(self.remoteConfig[key].jsonValue)
+    }
+    
     fileprivate func set(key:String, value: Any) {
         UserDefaults.standard.setValue(value, forKey: key)
         UserDefaults.standard.synchronize()
