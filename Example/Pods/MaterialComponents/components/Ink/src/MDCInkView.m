@@ -14,9 +14,10 @@
 
 #import "MDCInkView.h"
 
-#import "MaterialMath.h"
 #import "private/MDCInkLayer.h"
 #import "private/MDCLegacyInkLayer.h"
+#import "MDCInkViewDelegate.h"
+#import "MaterialMath.h"
 
 @interface MDCInkPendingAnimation : NSObject <CAAction>
 
@@ -27,7 +28,7 @@
 
 @end
 
-@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate>
+@interface MDCInkView () <CALayerDelegate, MDCInkLayerDelegate, MDCLegacyInkLayerDelegate>
 
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, copy) MDCInkCompletionBlock startInkRippleCompletionBlock;
@@ -35,13 +36,11 @@
 @property(nonatomic, strong) MDCInkLayer *activeInkLayer;
 
 // Legacy ink ripple
-@property(nonatomic, readonly) MDCLegacyInkLayer *inkLayer;
+@property(nonatomic, readonly, weak) MDCLegacyInkLayer *inkLayer;
 
 @end
 
-@implementation MDCInkView {
-  CGFloat _maxRippleRadius;
-}
+@implementation MDCInkView
 
 + (Class)layerClass {
   return [MDCLegacyInkLayer class];
@@ -74,13 +73,17 @@
   // Use mask layer when the superview has a shadowPath.
   _maskLayer = [CAShapeLayer layer];
   _maskLayer.delegate = self;
+
+  self.inkLayer.animationDelegate = self;
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
-  if (self.superview.layer.shadowPath) {
+  if (self.inkStyle == MDCInkStyleUnbounded) {
+    self.layer.mask = nil;
+  } else if (self.superview.layer.shadowPath) {
+    // If the superview has a shadowPath make sure ink does not spread outside of the shadowPath.
     self.maskLayer.path = self.superview.layer.shadowPath;
     self.layer.mask = _maskLayer;
   }
@@ -93,73 +96,53 @@
     if ([layer isKindOfClass:[MDCInkLayer class]]) {
       MDCInkLayer *inkLayer = (MDCInkLayer *)layer;
       inkLayer.bounds = inkBounds;
+      inkLayer.fillColor = self.inkColor.CGColor;
     }
+  }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
 }
 
 - (void)setInkStyle:(MDCInkStyle)inkStyle {
   _inkStyle = inkStyle;
-  if (self.usesLegacyInkRipple) {
-    switch (inkStyle) {
-      case MDCInkStyleBounded:
-        self.inkLayer.masksToBounds = YES;
-        self.inkLayer.bounded = YES;
-        break;
-      case MDCInkStyleUnbounded:
-        self.inkLayer.masksToBounds = NO;
-        self.inkLayer.bounded = NO;
-        break;
-    }
-  } else {
-    switch (inkStyle) {
-      case MDCInkStyleBounded:
-        self.inkLayer.maxRippleRadius = 0;
-        break;
-      case MDCInkStyleUnbounded:
-        self.inkLayer.maxRippleRadius = _maxRippleRadius;
-        break;
-    }
+  switch (inkStyle) {
+    case MDCInkStyleBounded:
+      self.inkLayer.masksToBounds = YES;
+      self.inkLayer.bounded = YES;
+      break;
+    case MDCInkStyleUnbounded:
+      self.inkLayer.masksToBounds = NO;
+      self.inkLayer.bounded = NO;
+      break;
   }
-}
-
-- (void)setInkColor:(UIColor *)inkColor {
-  if (inkColor == nil) {
-    return;
-  }
-  self.inkLayer.inkColor = inkColor;
 }
 
 - (UIColor *)inkColor {
   return self.inkLayer.inkColor;
 }
 
+- (void)setInkColor:(UIColor *)inkColor {
+  self.inkLayer.inkColor = inkColor ?: self.defaultInkColor;
+}
+
 - (CGFloat)maxRippleRadius {
-  return self.inkLayer.maxRippleRadius;
+  return [self shouldIgnoreMaxRippleRadius] ? 0 : self.inkLayer.maxRippleRadius;
 }
 
 - (void)setMaxRippleRadius:(CGFloat)radius {
-  // Keep track of the set value in case the caller will change inkStyle later
-  _maxRippleRadius = radius;
-  if (MDCCGFloatEqual(self.inkLayer.maxRippleRadius, radius)) {
-    return;
-  }
+  self.inkLayer.maxRippleRadius = radius;
+  // This is required for legacy Ink so that the Ink bounds will be adjusted correctly
+  [self setNeedsLayout];
+}
 
-  // Legacy Ink updates inkLayer.maxRippleRadius regardless of inkStyle
-  if (self.usesLegacyInkRipple) {
-    self.inkLayer.maxRippleRadius = radius;
-    // This is required for legacy Ink so that the Ink bounds will be adjusted correctly
-    [self setNeedsLayout];
-  } else {
-    // New Ink Bounded style ignores maxRippleRadius
-    switch (self.inkStyle) {
-      case MDCInkStyleUnbounded:
-        self.inkLayer.maxRippleRadius = radius;
-        break;
-      case MDCInkStyleBounded:
-        // No-op
-        break;
-    }
-  }
+- (BOOL)shouldIgnoreMaxRippleRadius {
+  return !self.usesLegacyInkRipple && self.inkStyle == MDCInkStyleBounded;
 }
 
 - (BOOL)usesCustomInkCenter {
@@ -241,7 +224,12 @@
 }
 
 - (UIColor *)defaultInkColor {
-  return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  static UIColor *defaultInkColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    defaultInkColor = [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
+  });
+  return defaultInkColor;
 }
 
 + (MDCInkView *)injectedInkViewForView:(UIView *)view {
@@ -259,6 +247,20 @@
     [view addSubview:foundInkView];
   }
   return foundInkView;
+}
+
+#pragma mark - MDCLegacyInkLayerDelegate
+
+- (void)legacyInkLayerAnimationDidStart:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
+    [self.animationDelegate inkAnimationDidStart:self];
+  }
+}
+
+- (void)legacyInkLayerAnimationDidEnd:(MDCLegacyInkLayer *)inkLayer {
+  if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidEnd:)]) {
+    [self.animationDelegate inkAnimationDidEnd:self];
+  }
 }
 
 #pragma mark - MDCInkLayerDelegate

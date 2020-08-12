@@ -13,12 +13,15 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
+#import "MaterialRipple.h"
 #import "MaterialShadowLayer.h"
 
 @protocol MDCShapeGenerating;
 
-@interface MDCCard : UIControl
+@interface MDCCard : UIControl <MDCElevatable, MDCElevationOverriding>
 
 /**
  The corner radius for the card
@@ -30,6 +33,12 @@
  The inkView for the card that is initiated on tap
  */
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
+
+/**
+ The rippleView for the card that is initiated on tap. The ripple view is the successor of ink
+ view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.
+ */
+@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
 
 /**
  This property defines if a card as a whole should be interactable or not.
@@ -44,6 +53,15 @@
  the card's content, such as buttons or other tappable controls.
  */
 @property(nonatomic, getter=isInteractable) IBInspectable BOOL interactable;
+
+/**
+ By setting this property to YES, you will enable and use inkView's successor rippleView as the
+ main view to provide visual feedback for taps. It is recommended to set this property right after
+ initializing the card.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  Sets the shadow elevation for an UIControlState state
@@ -124,6 +142,13 @@
  @return The shadow color for the requested state.
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ A block that is invoked when the @c MDCCard receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection);
 
 /*
  The shape generator used to define the card's shape.

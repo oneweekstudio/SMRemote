@@ -1,6 +1,6 @@
 {
   "name": "SMRemote",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "summary": "Sản phẩm thuộc về ONEWEEK STUDIO",
   "swift_versions": "4.2",
   "description": "TODO: Add long description of the pod here. Add long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here\nAdd long description of the pod here",
@@ -14,7 +14,7 @@
   },
   "source": {
     "git": "https://github.com/oneweekstudio/SMRemote.git",
-    "tag": "3.0.7"
+    "tag": "3.0.8"
   },
   "platforms": {
     "ios": "9.3"

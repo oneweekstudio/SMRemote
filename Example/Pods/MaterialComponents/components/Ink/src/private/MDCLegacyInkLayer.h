@@ -15,6 +15,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+// TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
+// longer import delegates as transitive dependencies.
+#import "MDCLegacyInkLayerDelegate.h"
+
+@protocol MDCLegacyInkLayerDelegate;
+
 /**
  A Core Animation layer that draws and animates the ink effect.
 
@@ -26,6 +32,12 @@
  3. On touch up, the ink ripple will lose energy, opacity will start to decrease.
  */
 @interface MDCLegacyInkLayer : CALayer
+
+/**
+ Ink layer animation delegate. Clients set this delegate to receive updates when ink layer
+ animations start and end.
+ */
+@property(nonatomic, weak, nullable) id<MDCLegacyInkLayerDelegate> animationDelegate;
 
 /** Clips the ripple to the bounds of the layer. */
 @property(nonatomic, assign, getter=isBounded) BOOL bounded;

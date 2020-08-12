@@ -82,9 +82,42 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
  leading-aligned within this box. In @c .expanded mode, the @c contentVerticalAlignment and
  @c contentHorizontalAlignment properties are ignored.
 
+ @note Setting the mode directly is equivalent to calling
+ @code [self setMode:mode animated:NO] @endcode.
+
  The default value is @c .normal .
  */
 @property(nonatomic, assign) MDCFloatingButtonMode mode;
+
+/**
+ Changes the mode (with animation, if desired).
+
+ If animated, the floating button's size will be updated automatically as part of the animation.
+ Otherwise, the floating button's size will need to be explicitly recalculated after the mode has
+ changed.
+
+ @see @c mode for more details about the mode value.
+ */
+- (void)setMode:(MDCFloatingButtonMode)mode animated:(BOOL)animated;
+
+/**
+ Changes the mode (with animation, if desired).
+
+ If animated, the floating button's size will be updated automatically as part of the animation.
+ Otherwise, the floating button's size will need to be explicitly recalculated after the mode has
+ changed.
+
+ @param animateAlongside An optional block that will be invoked alongside the animation, if
+ animated, otherwise it will be invoked immediately.
+ @param completion An optional block that will be invoked upon completion of the animation, if
+ animated, otherwise it will be invoked immediately.
+
+ @see @c mode for more details about the mode value.
+ */
+- (void)setMode:(MDCFloatingButtonMode)mode
+            animated:(BOOL)animated
+    animateAlongside:(nullable void (^)(void))animateAlongside
+          completion:(nullable void (^)(BOOL finished))completion;
 
 /**
  The location of the image relative to the title when the floating button is in @c expanded mode.
@@ -204,9 +237,29 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
                 forShape:(MDCFloatingButtonShape)shape
                   inMode:(MDCFloatingButtonMode)mode UI_APPEARANCE_SELECTOR;
 
-#pragma mark - Deprecations
+/**
+ Sets the @c centerVisibleArea value when the button has the specified @c shape and @c mode.
 
-+ (nonnull instancetype)buttonWithShape:(MDCFloatingButtonShape)shape
-    __deprecated_msg("Use floatingButtonWithShape: instead.");
+ @param centerVisibleArea The boolean value that determines whether the visible area is centered in
+ the bounds of the view.
+ @param shape The floating action button's shape (Default, Mini).
+ @param mode The floating action button's mode (Normal, Expanded).
+ */
+- (void)setCenterVisibleArea:(BOOL)centerVisibleArea
+                    forShape:(MDCFloatingButtonShape)shape
+                      inMode:(MDCFloatingButtonMode)mode;
+
+/**
+ Sets the @c visibleAreaInsets value when the button has the specified @c shape and @c mode.
+
+ @param visibleAreaInsets The insets to the visual representation of the button.
+ @param shape The floating action button's shape (Default, Mini).
+ @param mode The floating action button's mode (Normal, Expanded).
+ */
+- (void)setVisibleAreaInsets:(UIEdgeInsets)visibleAreaInsets
+                    forShape:(MDCFloatingButtonShape)shape
+                      inMode:(MDCFloatingButtonMode)mode
+    __attribute__((deprecated(
+        "Consider using setCenterVisibleArea:forShape:InMode: to adjust visible area.")));
 
 @end

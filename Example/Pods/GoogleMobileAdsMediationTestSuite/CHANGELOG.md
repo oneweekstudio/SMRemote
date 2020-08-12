@@ -1,5 +1,23 @@
 # Mediation Test Suite for Google Mobile Ads SDK for iOS
 
+### 1.3.0
+- Minor design updates.
+- Updated MaterialComponents dependency version to 111.0.
+
+### 1.2.1
+- Added Fyber Marketplace support.
+- Updated MaterialComponents dependency version to 109.0.
+
+### 1.2.0
+- Added ability to load Open Bidding ads.
+- Updated MaterialComponents dependency version to 103.0.
+
+### 1.1.1
+- Fixed issue with loading rewarded ads on newer adapter versions.
+- Fixed presentation issue on iOS 13.
+- Updated MaterialComponents dependency version to 94.0.
+- Minimum required version is now iOS 9.0.
+
 ### 1.1.0
 - Added initial open bidding support (ability to review configurations, cannot load ads).
 - Added support for Du Ad Platform and Verizon Media networks, as well as MoPub rewarded ads.

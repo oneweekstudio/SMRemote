@@ -25,11 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Audience Network error domain
  */
-FB_EXPORT NSString * const FBAudienceNetworkErrorDomain;
+FB_EXPORT NSString *const FBAudienceNetworkErrorDomain;
 /**
  Audience Network error FBMediaView error domain
  */
-FB_EXPORT NSString * const FBAudienceNetworkMediaViewErrorDomain;
+FB_EXPORT NSString *const FBAudienceNetworkMediaViewErrorDomain;
 
 /**
  Audience Network SDK logging levels
@@ -50,20 +50,6 @@ typedef NS_ENUM(NSInteger, FBAdLogLevel) {
     /// Log everything (verbose)
     FBAdLogLevelVerbose
 };
-
-/**
- Determines what method is used for rendering FBMediaView content
- */
-typedef NS_ENUM(NSInteger, FBMediaViewRenderingMethod) {
-    /// Automatic selection of rendering method
-    FBMediaViewRenderingMethodDefault,
-    /// Force Metal rendering (only use for devices with support)
-    FBMediaViewRenderingMethodMetal,
-    /// Force OpenGL rendering
-    FBMediaViewRenderingMethodOpenGL,
-    /// Software fallback
-    FBMediaViewRenderingMethodSoftware
-} FB_DEPRECATED_WITH_MESSAGE("Rendering method is no longer used in Audience Network");
 
 /**
  Test Ad type to be injected when test mode is on
@@ -102,8 +88,7 @@ typedef NS_ENUM(NSInteger, FBAdTestAdType) {
 /**
   AdSettings contains global settings for all ad controls.
  */
-FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
-@interface FBAdSettings : NSObject
+FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED @interface FBAdSettings : NSObject
 
 /**
  Controls support for audio-only video playback when the app is backgrounded.  Note that this is only supported
@@ -119,8 +104,8 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 @property (class, nonatomic, assign) FBAdTestAdType testAdType;
 
 /**
- When this delegate is set, logs will be redirected to the delegate instead of being logged directly to the console with NSLog.
- This can be used in combination with external logging frameworks.
+ When this delegate is set, logs will be redirected to the delegate instead of being logged directly to the console with
+ NSLog. This can be used in combination with external logging frameworks.
  */
 @property (class, nonatomic, weak, nullable) id<FBAdLoggingDelegate> loggingDelegate;
 
@@ -149,8 +134,6 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 
  @param deviceHash The id of the device to use test mode, can be obtained from debug log or testDeviceHash
 
-
-
  Copy the current device Id from debug log and add it as a test device to get test ads. Apps
  running on emulator will automatically get test ads. Test devices should be added before loadAd is called.
  */
@@ -161,7 +144,7 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 
  @param devicesHash The array of the device id to use test mode, can be obtained from debug log or testDeviceHash
  */
-+ (void)addTestDevices:(FB_NSArrayOf(NSString *)*)devicesHash;
++ (void)addTestDevices:(FB_NSArrayOf(NSString *) *)devicesHash;
 
 /**
   Clear all the added test devices
@@ -183,10 +166,19 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
  Note that you may have other legal obligations under the Children's Online Privacy Protection Act (COPPA).
  Please review the FTC's guidance and consult with your own legal counsel.
  */
-+ (void)setIsChildDirected:(BOOL)isChildDirected;
++ (void)setIsChildDirected:(BOOL)isChildDirected
+    FB_DEPRECATED_WITH_MESSAGE(
+        "isChildDirected method is no longer supported in Audience Network. Use +mixedAudience instead");
 
 /**
-  If an ad provided service is mediating Audience Network in their sdk, it is required to set the name of the mediation service
+ Configures the ad control for treatment as mixed audience directed.
+ Information for Mixed Audience Apps and Services: https://developers.facebook.com/docs/audience-network/coppa
+ */
+@property (class, nonatomic, assign, getter=isMixedAudience) BOOL mixedAudience;
+
+/**
+  If an ad provided service is mediating Audience Network in their sdk, it is required to set the name of the mediation
+ service
 
  @param service Representing the name of the mediation that is mediation Audience Network
  */
@@ -202,11 +194,9 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 /**
   Sets the url prefix to use when making ad requests.
 
-
-
- This method should never be used in production.
+  This method should never be used in production.
  */
-+ (void)setUrlPrefix:(nullable NSString *) urlPrefix;
++ (void)setUrlPrefix:(nullable NSString *)urlPrefix;
 
 /**
   Gets the current SDK logging level
@@ -218,21 +208,23 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
  */
 + (void)setLogLevel:(FBAdLogLevel)level;
 
-/**
-  Gets the FBMediaView rendering method
- */
-+ (FBMediaViewRenderingMethod)mediaViewRenderingMethod;
+/// Data processing options.
+/// Please read more details at https://developers.facebook.com/docs/marketing-apis/data-processing-options
+///
+/// @param options Processing options you would like to enable for a specific event. Current accepted value is LDU for
+/// Limited Data Use.
+/// @param country A country that you want to associate to this data processing option. Current accepted values are 1,
+/// for the United States of America, or 0, to request that we geolocate that event.
+/// @param state A state that you want to associate with this data processing option. Current accepted values are 1000,
+/// for California, or 0, to request that we geolocate that event.
++ (void)setDataProcessingOptions:(NSArray<NSString *> *)options country:(NSInteger)country state:(NSInteger)state;
 
-/**
-  Sets the FBMediaView rendering method
-  - Parameter mediaViewRenderingMethod:
-    FBMediaViewRenderingMethodDefault: SDK chooses optimized rendering method
-    FBMediaViewRenderingMethodMetal: use Metal kit rendering method
-    FBMediaViewRenderingMethodOpenGL: use OpenGL rendering method
-    FBMediaViewRenderingMethodSoftware: use software rendering method
- */
-+ (void)setMediaViewRenderingMethod:(FBMediaViewRenderingMethod)mediaViewRenderingMethod
-    FB_DEPRECATED_WITH_MESSAGE("Rendering method is no longer used in Audience Network");
+/// Data processing options.
+/// Please read more details at https://developers.facebook.com/docs/marketing-apis/data-processing-options
+///
+/// @param options Processing options you would like to enable for a specific event. Current accepted value is LDU for
+/// Limited Data Use.
++ (void)setDataProcessingOptions:(NSArray<NSString *> *)options;
 
 @end
 

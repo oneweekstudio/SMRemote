@@ -15,9 +15,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+#import "MaterialElevation.h"
 #import "MaterialInk.h"
 #import "MaterialShadowElevations.h"
-#import "MaterialShapesNew.h"
+#import "MaterialShapes.h"
 
 /**
  A Material flat, raised or floating button.
@@ -33,7 +34,7 @@
 
  @see https://material.io/go/design-buttons
  */
-@interface MDCButton : UIButton
+@interface MDCButton : UIButton <MDCElevatable, MDCElevationOverriding>
 
 /** The ink style of the button. */
 @property(nonatomic, assign) MDCInkStyle inkStyle UI_APPEARANCE_SELECTOR;
@@ -46,6 +47,16 @@
  self.bounds is used. This value is ignored if button's @c inkStyle is set to |MDCInkStyleBounded|.
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
+
+/**
+ This property determines if an @c MDCButton should use the @c MDCInkView behavior or not.
+
+ By setting this property to @c YES, @c MDCStatefulRippleView is used to provide the user visual
+ touch feedback, instead of the legacy @c MDCInkView.
+
+ @note Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  The alpha value that will be applied when the button is disabled. Most clients can leave this as
@@ -62,14 +73,28 @@
 @property(nonatomic, getter=isUppercaseTitle) BOOL uppercaseTitle UI_APPEARANCE_SELECTOR;
 
 /**
- Insets to apply to the button’s hit area.
+ A Boolean value that determines whether the visible area is centered in the bounds of the view.
 
- Allows the button to detect touches outside of its bounds. A negative value indicates an
- extension past the bounds.
+ If set to YES, the visible area is centered in the bounds of the view, which is often used to
+ configure invisible tappable area. If set to NO, the visible area fills its bounds. This property
+ doesn't affect the result of @c sizeThatFits:.
 
- Default is UIEdgeInsetsZero.
+ The default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL centerVisibleArea;
+
+/**
+ The default content edge insets of the button. They are set at initialization time.
  */
-@property(nonatomic) UIEdgeInsets hitAreaInsets;
+@property(nonatomic, readonly) UIEdgeInsets defaultContentEdgeInsets;
+
+/**
+ The offset (in points) of the button's inkView or rippleView (depending on which is being used -
+ see @c enableRippleBehavior)
+
+ Default is CGSizeZero.
+ */
+@property(nonatomic) CGSize inkViewOffset;
 
 /**
  The minimum size of the button’s alignment rect. If either the height or width are non-positive
@@ -119,17 +144,38 @@
     BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
 
 /**
- The shape generator used to define the button's shape.
+ Affects the fallback behavior for when a scaled font is not provided.
 
- note: If a layer property is explicitly set after the shapeGenerator has been set,
- it can lead to unexpected behavior.
+ If @c YES, the font size will adjust even if a scaled font has not been provided for
+ a given @c UIFont property on this component.
+
+ If @c NO, the font size will only be adjusted if a scaled font has been provided.
+
+ Default value is @c YES.
+ */
+@property(nonatomic, assign) BOOL adjustsFontForContentSizeCategoryWhenScaledFontIsUnavailable;
+
+/**
+ The shape generator used to define the button's shape.
 
  When the shapeGenerator is nil, MDCButton will use the default underlying layer with
  its default settings.
 
+ @note If a layer property is explicitly set after the shapeGenerator has been set,
+       it can lead to unexpected behavior.
+
+ @note When @c centerVisibleArea is set to YES, this property can no longer be set.
+
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator;
+
+/**
+ A block that is invoked when the MDCButton receives a call to @c
+ traitCollectionDidChange:. The block is called after the call to the superclass.
+ */
+@property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
+    (MDCButton *_Nonnull button, UITraitCollection *_Nullable previousTraitCollection);
 
 /**
  A color used as the button's @c backgroundColor for @c state.
@@ -152,24 +198,6 @@
 
 /* Convenience for `setBackgroundColor:backgroundColor forState:UIControlStateNormal`. */
 - (void)setBackgroundColor:(nullable UIColor *)backgroundColor;
-
-/**
- The font used by the button's @c title for @c state.
-
- @param state The state.
- @return The font.
- */
-- (nullable UIFont *)titleFontForState:(UIControlState)state;
-
-/**
- The font used by the button's @c title.
-
- If left unset or reset to nil for a given state, then a default font is used.
-
- @param font The font.
- @param state The state.
- */
-- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /** Sets the enabled state with optional animation. */
 - (void)setEnabled:(BOOL)enabled animated:(BOOL)animated;
@@ -294,22 +322,78 @@
  */
 + (nonnull instancetype)buttonWithType:(UIButtonType)buttonType NS_UNAVAILABLE;
 
-#pragma mark - Deprecated
+@end
+
+@interface MDCButton (ToBeDeprecated)
 
 /**
- This property sets/gets the title color for UIControlStateNormal.
+ Enables the state-based font behavior of the receiver.
+
+ If @c NO, then @c titleFont:forState: and @c setTitleFont:forState: have no effect.  Defaults to
+ @c YES.
+
+ @note This API will eventually be deprecated and removed.
  */
-@property(nonatomic, strong, nullable)
-    UIColor *customTitleColor UI_APPEARANCE_SELECTOR __deprecated_msg(
-        "Use setTitleColor:forState: instead");
+@property(nonatomic, assign) BOOL enableTitleFontForState;
 
-@property(nonatomic)
-    BOOL shouldRaiseOnTouch __deprecated_msg("Use MDCFlatButton instead of shouldRaiseOnTouch = NO")
-        ;
+/**
+ Insets to apply to the button’s hit area.
 
-@property(nonatomic) BOOL shouldCapitalizeTitle __deprecated_msg("Use uppercaseTitle instead.");
+ Allows the button to detect touches outside of its bounds. A negative value indicates an
+ extension past the bounds.
 
-@property(nonatomic, strong, nullable)
-    UIColor *underlyingColor __deprecated_msg("Use underlyingColorHint instead.");
+ Default is UIEdgeInsetsZero.
+ */
+@property(nonatomic) UIEdgeInsets hitAreaInsets;
+
+/**
+ The inset margins for the rectangle surrounding all of the button’s visual representation.
+ Use this property when you wish to have the touch target (frame) be larger than the
+ visible content.
+
+ A positive value shrinks the visible area of the button. A negative value expands the visible area
+ of the button.
+
+ The button uses this property to determine intrinsicContentSize and sizeThatFits:.
+
+ @note This property sets the @c shapeGenerator. Therefore you cannot use both properties
+ simultaneously. If you do wish to use a custom shape with visibleAreaInsets, please set your own
+ shapeGenerator that is inset from the frame instead of setting this property directly.
+
+ Default is UIEdgeInsetsZero.
+*/
+@property(nonatomic, assign) UIEdgeInsets visibleAreaInsets;
+
+/**
+ The font used by the button's @c title.
+
+ If left unset or reset to nil for a given state, then a default font is used.
+
+ @param font The font.
+ @param state The state.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (void)setTitleFont:(nullable UIFont *)font forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/**
+ The font used by the button's @c title for @c state.
+
+ @param state The state.
+ @return The font.
+
+ @note This API will eventually be deprecated and removed.
+ */
+- (nullable UIFont *)titleFontForState:(UIControlState)state;
+
+/**
+ If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
+ If @c false, @c accessibilityTraits will inherit its behavior from @c UIButton.
+
+ @note Defaults to true.
+ @note This API is intended as a migration flag to restore @c UIButton behavior to @c MDCButton. In
+       a future version, this API will eventually be deprecated and then deleted.
+ */
+@property(nonatomic, assign) BOOL accessibilityTraitsIncludesButton;
 
 @end

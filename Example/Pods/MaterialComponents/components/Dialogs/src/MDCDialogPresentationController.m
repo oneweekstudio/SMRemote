@@ -14,15 +14,16 @@
 
 #import "MDCDialogPresentationController.h"
 
-#import "MaterialKeyboardWatcher.h"
-#import "MaterialShadowLayer.h"
 #import "private/MDCDialogShadowedView.h"
+#import "MDCDialogPresentationControllerDelegate.h"
+#import "MaterialShadowLayer.h"
+#import "MaterialKeyboardWatcher.h"
 
-static CGFloat MDCDialogMinimumWidth = 280;
+static const CGFloat MDCDialogMinimumWidth = 280;
 // TODO: Spec indicates 40 side margins and 280 minimum width.
 // That is incompatible with a 320 wide device.
 // Side margins set to 20 until we have a resolution
-static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
+static const UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 @interface MDCDialogPresentationController ()
 
@@ -37,6 +38,8 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 @implementation MDCDialogPresentationController {
   UITapGestureRecognizer *_dismissGestureRecognizer;
+  BOOL useDialogCornerRadius;
+  CGFloat previousPresentedViewCornerRadius;
 }
 
 #pragma mark - UIPresentationController
@@ -55,6 +58,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 // duplication.
 - (void)setDialogCornerRadius:(CGFloat)cornerRadius {
   _trackingView.layer.cornerRadius = cornerRadius;
+  useDialogCornerRadius = YES;
 }
 
 - (CGFloat)dialogCornerRadius {
@@ -77,11 +81,21 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   return _trackingView.elevation;
 }
 
+- (void)setDialogShadowColor:(UIColor *)dialogShadowColor {
+  self.trackingView.shadowColor = dialogShadowColor;
+}
+
+- (UIColor *)dialogShadowColor {
+  return self.trackingView.shadowColor;
+}
+
 - (instancetype)initWithPresentedViewController:(UIViewController *)presentedViewController
                        presentingViewController:(UIViewController *)presentingViewController {
   self = [super initWithPresentedViewController:presentedViewController
                        presentingViewController:presentingViewController];
   if (self) {
+    useDialogCornerRadius = NO;
+
     _dimmingView = [[UIView alloc] initWithFrame:CGRectZero];
     _dimmingView.backgroundColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
     _dimmingView.alpha = 0;
@@ -90,6 +104,7 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
     [_dimmingView addGestureRecognizer:_dismissGestureRecognizer];
 
     _trackingView = [[MDCDialogShadowedView alloc] init];
+    _trackingView.shadowColor = UIColor.blackColor;
 
     [self registerKeyboardNotifications];
   }
@@ -99,6 +114,13 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (void)dealloc {
   [self unregisterKeyboardNotifications];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  if (self.traitCollectionDidChangeBlock) {
+    self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
 }
 
 - (CGRect)frameOfPresentedViewInContainerView {
@@ -145,6 +167,21 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   // TODO: Follow the Material spec description of Autonomous surface creation for both
   // presentation and dismissal of the dialog.
   // https://material.io/guidelines/motion/choreography.html#choreography-creation
+
+  // Ensure the same corner radius is used by both the tracking view and the view being presented
+  if (useDialogCornerRadius) {
+    // If dialogCornerRadius is set, use its value for the shadow layer as well as the presented
+    // view layer, overriding any direct assignments to the presented view's cornerRadius.
+    _trackingView.layer.cornerRadius = self.dialogCornerRadius;
+    // Note: For MDCAlertController, this assumes that the "view" property points to the same
+    // instance as the "alertView" property. Therefore, we are safe to not set its cornerRadius
+    // property (its ".cornerRadius", rather then its "presentedView.layer.cornerRadius")
+    previousPresentedViewCornerRadius = self.presentedView.layer.cornerRadius;
+    self.presentedView.layer.cornerRadius = self.dialogCornerRadius;
+  } else {
+    // If dialogCornerRadius is not set, use the presented view's cornerRadius for the shadow layer.
+    _trackingView.layer.cornerRadius = self.presentedView.layer.cornerRadius;
+  }
 
   // Set the dimming view to the container's bounds and fully transparent.
   self.dimmingView.frame = self.containerView.bounds;
@@ -208,6 +245,14 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
   }
 }
 
+- (CGAffineTransform)dialogTransform {
+  return self.trackingView.transform;
+}
+
+- (void)setDialogTransform:(CGAffineTransform)shadowTransform {
+  self.trackingView.transform = shadowTransform;
+}
+
 - (void)dismissalTransitionDidEnd:(BOOL)completed {
   if (completed) {
     [self.dimmingView removeFromSuperview];
@@ -215,6 +260,11 @@ static UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
     // Re-enable accessibilityElements on the presenting view controller.
     self.presentingViewController.view.accessibilityElementsHidden = NO;
+
+    if (useDialogCornerRadius) {
+      // Restore cornerRadius in case it had changed during presentation
+      self.presentedView.layer.cornerRadius = previousPresentedViewCornerRadius;
+    }
   }
 
   [super dismissalTransitionDidEnd:completed];
