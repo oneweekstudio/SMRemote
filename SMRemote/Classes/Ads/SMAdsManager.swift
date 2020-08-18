@@ -552,6 +552,11 @@ extension SMAdsManager: FBRewardedVideoAdDelegate {
         self.rewardDidLoadFailure?()
     }
     
+    public func rewardedVideoAd(_ rewardedVideoAd: FBRewardedVideoAd, didFailWithError error: Error) {
+        print("Rewarded video ad failed to load \(error)")
+        self.rewardDidLoadFailure?()
+    }
+    
     public func rewardedVideoAdDidClick(_ rewardedVideoAd: FBRewardedVideoAd) {
         print("Video ad clicked")
         self.rewardUserDidClick?()
