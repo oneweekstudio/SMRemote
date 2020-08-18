@@ -104,6 +104,7 @@ open class SMRemote : NSObject {
         completionHandler(json, qc)
     }
     
+    //Hàm hỗ trợ lấy remote config theo key. Ví vụ nhập "quangcao" -> trả về JSON quảng cáo tương ứng
     open func getRemoteValue( ByParameterKey key: String, completionHandler: @escaping (Any?) -> Void) -> Void {
         completionHandler(self.remoteConfig[key])
     }

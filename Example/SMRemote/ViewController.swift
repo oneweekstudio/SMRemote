@@ -15,13 +15,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var bannerHeight: NSLayoutConstraint!
     @IBOutlet weak var bannerView: SMAdsBannerView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.loadConfig()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -29,10 +29,10 @@ class ViewController: UIViewController {
     
     func loadConfig() {
         //deprecated
-//        SMRemote.sharedInstance.load(smConfig: Dev()) { success in
-//            print("Tải thành công config từ remote")
-//        }
-//        print(SMAds)
+        //        SMRemote.sharedInstance.load(smConfig: Dev()) { success in
+        //            print("Tải thành công config từ remote")
+        //        }
+        //        print(SMAds)
         SMRemote.sharedInstance.loadConfig(smConfig: Dev()) { (optionalJson, quangcao) in
             guard let json = optionalJson else { return }
             //print(json)
@@ -57,24 +57,30 @@ class ViewController: UIViewController {
                                           bannerHeight: self.bannerHeight,
                                           keyConfig: #keyPath(Dev.banner_home))
     }
-
+    
     
     @IBAction func showReward(_ sender: Any){
-        SMAdsManager.shared.showReward(controller: self,
-        rewardDidLoadComplete: {
-            //
-        }, rewardDidLoadFailure: {
-            
-        }, rewardDidWatch: {
-            //Trả thưởng
-        }, rewardDidClose:  {
-            //
+        SMAdsManager.shared.presentReward(controller: self,
+                                          rewardDidPresent: {},
+                                          rewardDidFailToPresent: {},
+                                          rewardDidClose: {},
+                                          rewardUserDidEarn: {},
+                                          rewardUserDidClick: {})
+    }
+    
+    
+    @IBAction func loadReward(_ sender: Any) {
+        SMAdsManager.shared.loadReward(rewardDidLoadComplete: {
+            //Load completed
+        },
+                                       rewardDidLoadFailure: {
+                            //Load failure
         })
     }
     
     @IBAction func callTestSuite(_ sender: Any) {
         GoogleMobileAdsMediationTestSuite.present(on:self, delegate:nil)
-//        GoogleMobileAdsMediationTestSuite.present(withAppID: "ca-app-pub-8522828045267862~9280984686", on: self, delegate: nil)
+        //        GoogleMobileAdsMediationTestSuite.present(withAppID: "ca-app-pub-8522828045267862~9280984686", on: self, delegate: nil)
     }
 }
 
@@ -82,9 +88,9 @@ class ViewController: UIViewController {
 //Tạo 1 class kế thừa từ SMConfig
 open class Dev : SMRemoteConfig {
     
-//    @deprecated
-//    @objc var custom_property = 1
-//    @objc var banner_home = 1
+    //    @deprecated
+    //    @objc var custom_property = 1
+    //    @objc var banner_home = 1
     
     @objc var home_click_full_start = 0
     @objc var home_click_full_loop = 0

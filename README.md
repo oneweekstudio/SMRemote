@@ -26,10 +26,10 @@ dong_khoai_to
     "network": "admob"
   },
   "reward": {
-    "app_id": "",
-    "ads_id": "",
+    "app_id": "ca-app-pub-3940256099942544~1458002511",
+    "ads_id": "ca-app-pub-3940256099942544/1712485313",
     "format": "reward",
-    "status": "0",
+    "status": "1",
     "network": "admob"
   },
   "native": {
@@ -59,10 +59,10 @@ dong_khoai_to
     "network": "facebook"
   },
   "reward": {
-    "app_id": "",
-    "ads_id": "",
+    "app_id": "1562525404054991",
+    "ads_id": "549167759165615_549192132496511",
     "format": "reward",
-    "status": "0",
+    "status": "1",
     "network": "facebook"
   },
   "native": {
