@@ -530,6 +530,9 @@ extension SMAdsManager: FBRewardedVideoAdDelegate {
     public func loadFacebookRewardedVideoAd() {
         self.rewardedVideoAd = FBRewardedVideoAd.init(placementID: quangcao.reward.ads_id)
         self.rewardedVideoAd?.delegate = self
+        if SMRemote.sharedInstance.isDebug {
+            FBAdSettings.addTestDevice(FBAdSettings.testDeviceHash())
+        }
         self.rewardedVideoAd?.load()
     }
     

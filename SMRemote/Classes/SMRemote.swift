@@ -10,7 +10,7 @@ import FirebaseRemoteConfig
 import GoogleMobileAds
 open class SMRemote : NSObject {
     
-    public var isDebug: Bool = false
+    open var isDebug: Bool = false
     
     var remoteConfig = RemoteConfig.remoteConfig()
     var settings = RemoteConfigSettings()
