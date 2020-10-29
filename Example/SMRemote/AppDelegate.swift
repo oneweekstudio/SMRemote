@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
                 
         //Su dung ham nay
-        SMRemote.sharedInstance.enableDebug(true)
+        SMRemote.sharedInstance.enableDebug(false)
         
         return true
     }

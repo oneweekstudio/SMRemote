@@ -33,9 +33,11 @@ open class SMRemote : NSObject {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(_expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
-                self.remoteConfig.activate(completionHandler: nil)
-                self.setToolConfig(smConfig) { (json, qc)  in
-                    completionHandler?(json, qc)
+                self.remoteConfig.activate { (success, error) in
+                    print("Error: \(error)")
+                    self.setToolConfig(smConfig) { (json, qc)  in
+                        completionHandler?(json, qc)
+                    }
                 }
             } else {
                 print("Config not fetched")
