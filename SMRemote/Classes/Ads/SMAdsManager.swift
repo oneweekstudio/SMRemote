@@ -37,7 +37,7 @@ open class SMAdsManager : NSObject {
     public static let shared = SMAdsManager()
     
     /// Quảng cáo này được lấy khi gọi remote config load.
-    var quangcao:AdsModel = AdsModel()
+    public var quangcao:AdsModel = AdsModel()
     
     //Quảng cáo xen kẽ
     fileprivate var admob: GADInterstitial!
