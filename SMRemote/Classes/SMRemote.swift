@@ -35,8 +35,10 @@ open class SMRemote : NSObject {
                 print("Config fetched!")
                 self.remoteConfig.activate { (success, error) in
                     print("Error: \(error)")
-                    self.setToolConfig(smConfig) { (json, qc)  in
-                        completionHandler?(json, qc)
+                    DispatchQueue.main.async {
+                        self.setToolConfig(smConfig) { (json, qc)  in
+                            completionHandler?(json, qc)
+                        }
                     }
                 }
             } else {
