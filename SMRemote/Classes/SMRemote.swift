@@ -18,7 +18,6 @@ open class SMRemote : NSObject {
     
     public static let sharedInstance : SMRemote = {
         let instance = SMRemote()
-        instance.settings.minimumFetchInterval = 0
         instance.remoteConfig.configSettings = instance.settings
         return instance
     }()
@@ -33,12 +32,10 @@ open class SMRemote : NSObject {
         remoteConfig.fetch(withExpirationDuration: TimeInterval(_expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
-                self.remoteConfig.activate { (success, error) in
-                    print("Error: \(error)")
-                    DispatchQueue.main.async {
-                        self.setToolConfig(smConfig) { (json, qc)  in
-                            completionHandler?(json, qc)
-                        }
+                self.remoteConfig.activateFetched()
+                DispatchQueue.main.async {
+                    self.setToolConfig(smConfig) { (json, qc)  in
+                        completionHandler?(json, qc)
                     }
                 }
             } else {
@@ -51,15 +48,16 @@ open class SMRemote : NSObject {
     
     private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (_ config :Any,_ quangcao: Any?) -> Void) {
         var qc: Any?
-        if let quangcao = self.remoteConfig["quangcao"].jsonValue as? [String : Any]{
+        if let string = self.remoteConfig["quangcao"].stringValue ,
+           let quangcao = string.convertJson(){
             print("Quảng cáo :\n \(quangcao)")
             SMAdsManager.shared.quangcao = AdsModel(quangcao)
             qc = quangcao
         }
         
         print("\nTools :")
-        print(remoteConfig["tools"].jsonValue ?? "None")
-        guard let json = remoteConfig["tools"].jsonValue as? [String : Any] else {
+        guard let string = remoteConfig["tools"].stringValue ,
+            let json = string.convertJson() else {
             completionHandler([:], qc)
             return }
         
@@ -128,4 +126,24 @@ open class SMRemote : NSObject {
         return value
     }
     
+}
+
+extension String {
+    func convertJson()->[String:Any]?{
+        guard let data = self.data(using: .utf8) else {
+            return nil
+        }
+        do {
+            if let jsonArray = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? [String:Any]
+            {
+                return jsonArray
+            } else {
+                print("bad json")
+                return nil
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
 }

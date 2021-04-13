@@ -45,7 +45,7 @@ open class SMAdsBannerView : UIView {
     
     private func loadMediation() {
         print(#function)
-        admobView = GADBannerView.init(adSize: kGADAdSizeSmartBannerPortrait)
+        admobView = GADBannerView.init(adSize: GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(UIScreen.main.bounds.size.width))
         admobView.adUnitID = bannerUnit.ads_id
         admobView.delegate = self
         admobView.rootViewController = rootViewController
@@ -68,7 +68,7 @@ open class SMAdsBannerView : UIView {
     }
     
     private func loadGADBannerView() {
-        admobView = GADBannerView.init(adSize: kGADAdSizeSmartBannerPortrait)
+        admobView = GADBannerView.init(adSize: GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(UIScreen.main.bounds.size.width))
         admobView.adUnitID = bannerUnit.ads_id
         admobView.delegate = self
         admobView.rootViewController = rootViewController
@@ -125,16 +125,14 @@ open class SMAdsBannerView : UIView {
 
 extension SMAdsBannerView : GADBannerViewDelegate {
     
-    public func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+    public func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("GADBannerView : adViewDidReceiveAd")
-        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName)")
+        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName ?? "nil")")
         self.backgroundColor = UIColor.black
     }
-    
-    public func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName)")
+    public func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("Banner adapter class name: \(bannerView.responseInfo?.adNetworkClassName ?? "nil")")
         print("GADBannerView : didFailToReceiveAdWithError \(error.localizedDescription)")
-        
     }
 }
 

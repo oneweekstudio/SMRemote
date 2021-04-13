@@ -1,5 +1,7 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/VungleSDK-iOS
+EXCLUDED_ARCHS[sdk=iphoneos*] = i386 x86_64
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64 arm64e armv7 armv7s
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/VungleSDK-iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 OTHER_LDFLAGS = $(inherited) -ObjC -l"z" -framework "AVFoundation" -framework "AdSupport" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreGraphics" -framework "CoreMedia" -framework "MediaPlayer" -framework "QuartzCore" -framework "StoreKit" -framework "SystemConfiguration" -weak_framework "Foundation" -weak_framework "UIKit" -weak_framework "WebKit"

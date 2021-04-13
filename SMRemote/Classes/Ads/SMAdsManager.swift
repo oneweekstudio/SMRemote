@@ -40,7 +40,7 @@ open class SMAdsManager : NSObject {
     public var quangcao:AdsModel = AdsModel()
     
     //Quảng cáo xen kẽ
-    fileprivate var admob: GADInterstitial!
+    fileprivate var admob: GADInterstitialAd!
     fileprivate var facebook: FBInterstitialAd!
     
     
@@ -241,7 +241,6 @@ open class SMAdsManager : NSObject {
             
             self.interstitialDidCompled = completionHandler
             
-            self.admob = GADInterstitial(adUnitID: self.quangcao.full.ads_id)
             let request = GADRequest()
             
             if self.quangcao.full.network == "mediation" {
@@ -256,9 +255,13 @@ open class SMAdsManager : NSObject {
                 vungleExtras.allPlacements = ["AdmobMediatedBanner"]
                 request.register(vungleExtras)
             }
+            GADInterstitialAd.load(withAdUnitID: self.quangcao.full.ads_id, request: request) { (ad , error) in
+                self.admob = ad
+                self.admob.fullScreenContentDelegate = self
+                self.interstitialDidCompled?(true)
+                self.hideLoading(vc: self.controller)
+            }
             
-            self.admob.load(request)
-            self.admob.delegate = self
             if SMRemote.sharedInstance.isDebug {
                 print("DEBUG ENABLE : kGADSimulatorID  \(kGADSimulatorID)")
                 //                request.testDevices = [(kGADSimulatorID as! String)]
@@ -293,44 +296,28 @@ open class SMAdsManager : NSObject {
 }
 
 //MARK:- GADInterstitialDelegate (Full)
-extension SMAdsManager : GADInterstitialDelegate {
-    /// Tells the delegate an ad request succeeded.
-    public func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("SMAdsManager:ADMOB:interstitialDidReceiveAd")
-        print("Interstitial adapter class name: \(ad.responseInfo?.adNetworkClassName)")
-        interstitialDidCompled?(true)
-        self.hideLoading(vc: self.controller)
-    }
+extension SMAdsManager : GADFullScreenContentDelegate {
     
-    /// Tells the delegate an ad request failed.
-    public func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        print("SMAdsManager:ADMOB:interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    /// Tells the delegate that the ad failed to present full screen content.
+    public func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+        print("SMAdsManager:ADMOB:interstitial:didFailToPresentFullScreenContentWithError: \(error.localizedDescription)")
         interstitialDidCompled?(false)
         self.hideLoading(vc: self.controller)
-    }
-    
-    /// Tells the delegate that an interstitial will be presented.
-    public func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        //        print("SMAdsManager:interstitialWillPresentScreen")
-    }
-    
-    /// Tells the delegate the interstitial is to be animated off the screen.
-    public func interstitialWillDismissScreen(_ ad: GADInterstitial) {
-        //        print("SMAdsManager:interstitialWillDismissScreen")
-    }
-    
-    /// Tells the delegate the interstitial had been animated off the screen.
-    public func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        //        print("SMAdsManager:interstitialDidDismissScreen")
+      }
+
+      /// Tells the delegate that the ad presented full screen content.
+    public func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did present full screen content.")
+      }
+
+      /// Tells the delegate that the ad dismissed full screen content.
+    public func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
         interstitialDidCompled?(false)
         self.hideLoading(vc: self.controller)
-    }
+      }
     
-    /// Tells the delegate that a user click will open another app
-    /// (such as the App Store), backgrounding the current app.
-    public func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-        //        print("SMAdsManager:interstitialWillLeaveApplication")
-    }
 }
 
 //MARK:- FBInterstitialAdDelegate ( Full )
@@ -460,7 +447,10 @@ extension SMAdsManager{
             if quangcao.reward.network == "facebook" {
                 self.presentFacebookRewardedVideoAd(controller: controller)
             } else if quangcao.reward.network == "admob" {
-                    self.presentAdmobRewardedVideoAd(controller: controller)
+                self.rewardedAd?.present(fromRootViewController: controller, userDidEarnRewardHandler: {
+                    //user did earn
+                    self.rewardUserDidEarn?()
+                })
             }
         } else {
             //Không load quảng cáo
@@ -472,55 +462,21 @@ extension SMAdsManager{
 }
 
 //MARK:- GADRewardedAdDelegate
-extension SMAdsManager : GADRewardedAdDelegate {
+extension SMAdsManager  {
     
     public func loadAdmobRewardedVideoAd() {
-        self.rewardedAd = GADRewardedAd(adUnitID: quangcao.reward.ads_id)
-        rewardedAd?.load(GADRequest()) { error in
-            if let error = error {
-                // Handle ad failed to load case.
-                //Error
-                print("Load error: \(error)")
-                self.rewardDidLoadFailure?()
-            } else {
-                // Ad successfully loaded.
-                print("Load admod reward success!")
+        GADRewardedAd.load(withAdUnitID: self.quangcao.reward.ads_id, request: GADRequest()) { (ad, error) in
+            if error != nil {
+                return
+            }
+            if let a = ad {
+                self.rewardedAd = a
                 self.rewardDidLoadComplete?()
+            }else{
+                self.rewardDidLoadFailure?()
             }
         }
     }
-    
-    public func presentAdmobRewardedVideoAd(controller: UIViewController) {
-        if rewardedAd?.isReady == true {
-            rewardDidPresent?()
-            rewardedAd?.present(fromRootViewController: controller, delegate:self)
-        } else {
-            rewardDidFailToPresent?()
-        }
-    }
-    
-    /// Tells the delegate that the user earned a reward.
-    public func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
-        print("Reward received with currency: \(reward.type), amount \(reward.amount).")
-        self.rewardUserDidEarn?()
-    }
-    /// Tells the delegate that the rewarded ad was presented.
-    public func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
-        print("Rewarded ad presented.")
-        self.rewardDidPresent?()
-    }
-    /// Tells the delegate that the rewarded ad was dismissed.
-    public func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-        print("Rewarded ad dismissed.")
-        self.rewardDidClose?()
-    }
-    /// Tells the delegate that the rewarded ad failed to present.
-    public func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
-        print("Rewarded ad failed to present.")
-        self.rewardDidFailToPresent?()
-        
-    }
-    
     
 }
 
