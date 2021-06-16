@@ -257,8 +257,10 @@ open class SMAdsManager : NSObject {
             }
             GADInterstitialAd.load(withAdUnitID: self.quangcao.full.ads_id, request: request) { (ad , error) in
                 self.admob = ad
-                self.admob.fullScreenContentDelegate = self
-                self.interstitialDidCompled?(true)
+                if let a = ad {
+                    a.fullScreenContentDelegate = self
+                    self.interstitialDidCompled?(true)
+                }
                 self.hideLoading(vc: self.controller)
             }
             
