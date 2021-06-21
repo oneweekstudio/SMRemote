@@ -149,5 +149,5 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/GoogleMobileAdsMediationVungle/VungleAdapter-6.9.1.0/VungleAdapter.xcframework" "VungleAdapter" "framework" "ios-x86_64-simulator" "ios-armv7_arm64"
+install_xcframework "${PODS_ROOT}/GoogleMobileAdsMediationVungle/VungleAdapter-6.9.2.0/VungleAdapter.xcframework" "VungleAdapter" "framework" "ios-x86_64-simulator" "ios-arm64_armv7"
 

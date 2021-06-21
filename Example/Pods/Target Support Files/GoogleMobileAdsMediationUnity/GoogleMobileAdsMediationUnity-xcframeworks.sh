@@ -149,5 +149,5 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/GoogleMobileAdsMediationUnity/UnityAdapter-3.6.2.0/UnityAdapter.xcframework" "UnityAdapter" "framework" "ios-x86_64-simulator" "ios-arm64_armv7"
+install_xcframework "${PODS_ROOT}/GoogleMobileAdsMediationUnity/UnityAdapter-3.7.2.0/UnityAdapter.xcframework" "UnityAdapter" "framework" "ios-arm64_armv7" "ios-x86_64-simulator"
 
