@@ -27,14 +27,14 @@ open class SMRemote : NSObject {
     }
     
     //Hàm này trả về JSON tools và mã quảng cáo
-    open func loadConfig( smConfig: SMRemoteConfig, completionHandler: ((_ tools: Any?,_ quangcao: Any?) -> Void)?) {
+    open func loadConfig( smConfig: SMRemoteConfig,toolsKeyString:String = "tools", completionHandler: ((_ tools: Any?,_ quangcao: Any?) -> Void)?) {
         let _expirationDuration = self.expirationDuration
         remoteConfig.fetch(withExpirationDuration: TimeInterval(_expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completion: nil)
                 DispatchQueue.main.async {
-                    self.setToolConfig(smConfig) { (json, qc)  in
+                    self.setToolConfig(smConfig,toolsKeyString:toolsKeyString) { (json, qc)  in
                         completionHandler?(json, qc)
                     }
                 }
@@ -46,7 +46,7 @@ open class SMRemote : NSObject {
         }
     }
     
-    private func setToolConfig(_ config : SMRemoteConfig, completionHandler:@escaping (_ config :Any,_ quangcao: Any?) -> Void) {
+    private func setToolConfig(_ config : SMRemoteConfig,toolsKeyString:String = "tools", completionHandler:@escaping (_ config :Any,_ quangcao: Any?) -> Void) {
         var qc: Any?
         if let string = self.remoteConfig["quangcao"].stringValue ,
            let quangcao = string.convertJson(){
@@ -56,7 +56,7 @@ open class SMRemote : NSObject {
         }
         
         print("\nTools :")
-        guard let string = remoteConfig["tools"].stringValue ,
+        guard let string = remoteConfig[toolsKeyString].stringValue ,
             let json = string.convertJson() else {
             completionHandler([:], qc)
             return }
